@@ -1,24 +1,37 @@
 @import "tailwindcss";
 
 @theme {
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
+    --font-sans: var(--font-geist-sans);
+    --font-mono: var(--font-geist-mono);
 }
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+    --background: #ffffff;
+    --foreground: #171717;
 }
 
 @media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+    :root {
+        --background: #0a0a0a;
+        --foreground: #ededed;
+    }
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+    background-image: url("/background.jpg"); /* استخدم المسار داخل مجلد public */
+    background-size: cover; /* تغطية الشاشة بالكامل */
+    background-position: center; /* توسيط الصورة */
+    background-attachment: fixed; /* تثبيت الخلفية */
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+}
+@media screen and (max-width: 768px) {
+    body {
+        background-image: url("/777.jpg");
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+    }
+    
 }
