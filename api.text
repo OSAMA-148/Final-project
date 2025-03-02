@@ -1,0 +1,100 @@
+"use client";
+
+import { useState, useEffect, useCallback } from "react";
+import { useDropzone } from "react-dropzone";
+import { motion } from "framer-motion";
+import axios from "axios";
+
+const API_URL = "https://your-api.com/upload"; // ضع رابط الـ API هنا
+const DELETE_URL = "https://your-api.com/delete"; // رابط حذف الصورة
+
+export default function ImageUploader() {
+    const [uploadedImage, setUploadedImage] = useState(null);
+
+    // استرجاع الصورة من الـ API عند فتح الصفحة
+    useEffect(() => {
+        axios.get(`${API_URL}/latest`) // طلب آخر صورة مرفوعة
+            .then(response => {
+                if (response.data.imageUrl) {
+                    setUploadedImage(response.data.imageUrl);
+                }
+            })
+            .catch(error => console.error("Error fetching image:", error));
+    }, []);
+
+    // رفع الصورة إلى API
+    const onDrop = useCallback((acceptedFiles) => {
+        const file = acceptedFiles[0];
+        if (!file) return;
+
+        const formData = new FormData();
+        formData.append("image", file);
+
+        axios.post(API_URL, formData)
+            .then(response => {
+                setUploadedImage(response.data.imageUrl); // حفظ رابط الصورة المسترجع
+            })
+            .catch(error => console.error("Error uploading image:", error));
+    }, []);
+
+    // حذف الصورة من API
+    const removeImage = () => {
+        axios.delete(DELETE_URL, { data: { imageUrl: uploadedImage } })
+            .then(() => {
+                setUploadedImage(null);
+            })
+            .catch(error => console.error("Error deleting image:", error));
+    };
+
+    const { getRootProps, getInputProps, isDragActive } = useDropzone({
+        onDrop,
+        accept: { "image/*": [] },
+    });
+
+    return (
+        <div className="flex flex-col items-center">
+            {!uploadedImage && (
+                <div
+                    {...getRootProps()}
+                    className="border-2 border-dashed border-green-700 w-64 h-40 flex justify-center items-center cursor-pointer bg-gray-100 hover:bg-gray-200 transition"
+                >
+                    <input {...getInputProps()} />
+                    {isDragActive ? (
+                        <p className="text-gray-700">أسقط الصورة هنا...</p>
+                    ) : (
+                        <p className="text-gray-500">اسحب وأسقط صورة هنا أو انقر لاختيار صورة</p>
+                    )}
+                </div>
+            )}
+
+            {uploadedImage && (
+                <motion.div
+                    className="mt-4 bg-white p-4 rounded-lg shadow-lg flex flex-col items-center border border-gray-200"
+                    initial={{ opacity: 0, y: 50 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
+                >
+                    <img
+                        src={uploadedImage}
+                        alt="Uploaded"
+                        className="w-40 h-40 object-cover rounded-md shadow-md"
+                    />
+                    <motion.p
+                        className="mt-2 text-gray-600 text-sm text-center"
+                        initial={{ opacity: 0, scale: 0.8 }}
+                        animate={{ opacity: 1, scale: 1 }}
+                        transition={{ delay: 0.3, duration: 0.5 }}
+                    >
+                        تم تحميل الصورة بنجاح! هذه الصورة سيتم استخدامها لتصنيف أمراض النباتات.
+                    </motion.p>
+                    <button
+                        onClick={removeImage}
+                        className="mt-3 bg-red-600 text-white px-4 py-2 rounded-md hover:bg-red-700 transition"
+                    >
+                        حذف الصورة ❌
+                    </button>
+                </motion.div>
+            )}
+        </div>
+    );
+}

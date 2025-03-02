@@ -1,26 +1,38 @@
+"use client";
 import Image from "next/image";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
+import { useState, useEffect } from "react";
 
 export default function HomeLayout({ children }) {
+    const [profileImage, setProfileImage] = useState(null);
+
+    useEffect(() => {
+        const savedImage = localStorage.getItem("profileImage");
+        if (savedImage) {
+            setProfileImage(savedImage);
+        }
+    }, []);
     return (
         <>
             {/* أيقونة الرجوع */}
             <Link href="/home" className="absolute left-5 top-5 text-2xl">
                 <IoIosArrowBack />
             </Link>
-            {/* صورة المستخدم ونص الترحيب */}
-            <div className="flex justify-center items-center absolute left-3.5 top-1/5 pb-6 lg:top-28">
+            {/* صورة المستخدم في كل الصفحات */}
+            <div className="absolute left-3.5 top-48 lg:top-22 flex justify-center items-center">
                 <Image
-                    src="/profile.png"
-                    alt="Profile Picture"
-                    width={50}
-                    height={50}
-                    className="rounded-full"
+                    width={40}
+                    height={40}
+                    src={profileImage || "/defult.png"}
+                    alt="Profile"
+                    className="w-12 h-12 rounded-full border border-gray-300"
                 />
-                <p className="text-2xl font-bold ml-5">(Name)</p>
+                <span className="block ml-2 font-bold text-2xl">Name</span>
             </div>
-            <main>{children}</main>
+            <main className="flex justify-center items-center w-full h-full">
+                {children}
+            </main>
         </>
     );
 }
