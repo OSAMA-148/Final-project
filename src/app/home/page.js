@@ -31,7 +31,7 @@ const page = () => {
 
             <main className="pt-44">
                 {/* Profile Picture and Welcome Text */}
-                <div className="flex items-center relative left-3.5 top-[-40px] lg:top-[-75px]">
+                <div className="flex items-center relative left-3.5 bottom-20">
                     <Image
                         src="/profile.png"
                         alt="Profile Picture"
@@ -44,10 +44,10 @@ const page = () => {
                     </p>
                 </div>
                 {/* Buttons Section */}
-                <div className="flex flex-wrap justify-center gap-6">
+                <div className="flex flex-wrap justify-center gap-8">
                     <Link
                         href="/upload"
-                        className="bg-green-600 text-black p-6 rounded-lg flex flex-col items-center justify-center w-[40%]"
+                        className="bg-green-600 text-black p-4 rounded-lg flex flex-col items-center justify-center w-md hover:bg-green-500 transition duration-300 ease-in-out"
                     >
                         <Image
                             src="/uploadimage.svg"
@@ -55,12 +55,14 @@ const page = () => {
                             width={30}
                             height={30}
                         />
-                        <span className="mt-2">Upload Image</span>
+                        <span className="mt-2 font-semibold font-serif">
+                            Upload Image
+                        </span>
                     </Link>
 
                     <Link
                         href="/common"
-                        className="bg-green-600 text-black p-6 rounded-lg flex flex-col items-center justify-center w-[40%]"
+                        className="bg-green-600 text-black p-6 rounded-lg flex flex-col items-center justify-center w-md hover:bg-green-500 transition duration-300 ease-in-out"
                     >
                         <Image
                             src="/common.svg"
@@ -68,12 +70,14 @@ const page = () => {
                             width={30}
                             height={30}
                         />
-                        <span className="mt-2">Common Regional Diseases</span>
+                        <span className="mt-2 font-semibold font-serif">
+                            Common Regional Diseases
+                        </span>
                     </Link>
 
                     <Link
                         href="/report"
-                        className="bg-green-600 text-black p-6 rounded-lg flex flex-col items-center justify-center w-[40%]"
+                        className="bg-green-600 text-black p-6 rounded-lg flex flex-col items-center justify-center w-md hover:bg-green-500 transition duration-300 ease-in-out"
                     >
                         <Image
                             src="/report.svg"
@@ -81,12 +85,14 @@ const page = () => {
                             width={30}
                             height={30}
                         />
-                        <span className="mt-2">Report a Problem</span>
+                        <span className="mt-2 font-serif font-semibold">
+                            Report a Problem
+                        </span>
                     </Link>
 
                     <Link
                         href="/usage"
-                        className="bg-green-600 text-black p-6 rounded-lg flex flex-col items-center justify-center w-[40%]"
+                        className="bg-green-600 text-black p-6 rounded-lg flex flex-col items-center justify-center w-md hover:bg-green-500 transition duration-300 ease-in-out"
                     >
                         <Image
                             src="/tips.svg"
@@ -94,7 +100,9 @@ const page = () => {
                             width={30}
                             height={30}
                         />
-                        <span className="mt-2">Fertilizers Usage Tips</span>
+                        <span className="mt-2 font-serif font-semibold">
+                            Fertilizers Usage Tips
+                        </span>
                     </Link>
                 </div>
             </main>
