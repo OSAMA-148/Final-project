@@ -18,7 +18,7 @@ const Setting = () => {
                     <input
                         type="text"
                         placeholder="Name"
-                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
                 </div>
                 {/* Email Input */}
@@ -27,7 +27,7 @@ const Setting = () => {
                     <input
                         type="text"
                         placeholder="Email"
-                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
                 </div>
                 {/* Password Input */}
@@ -36,7 +36,7 @@ const Setting = () => {
                     <input
                         type={showPassword ? "text" : "password"}
                         placeholder="Password"
-                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
                     <button
                         type="button"
@@ -51,8 +51,8 @@ const Setting = () => {
                     <FaLock className="absolute left-3 top-3 text-gray-400" />
                     <input
                         type={showConfirmPassword ? "text" : "password"}
-                        placeholder="Password"
-                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-blue-500"
+                        placeholder="confirm Password"
+                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                     />
                     <button
                         type="button"
