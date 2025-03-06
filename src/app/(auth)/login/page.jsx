@@ -36,17 +36,17 @@ const Login = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="flex justify-center items-center gap-5 flex-col w-full h-full pb-14"
+            className="flex justify-center items-center gap-2 flex-col w-full h-full pb-15"
         >
             <div className="relative mb-4">
-                <FaUser className="absolute left-3 top-3 text-gray-400" />
+                <FaUser className="absolute left-3 top-3 text-gray-400 text-2xl" />
                 <input
                     type="email"
                     name="email"
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Email"
-                    className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
                 {errors.email && (
                     <p className="text-red-500 text-sm">{errors.email[0]}</p>
@@ -54,18 +54,18 @@ const Login = () => {
             </div>
 
             <div className="relative mb-4">
-                <FaLock className="absolute left-3 top-3 text-gray-400" />
+                <FaLock className="absolute left-3 top-3 text-gray-400 text-2xl" />
                 <input
                     type={showPassword ? "text" : "password"}
                     name="password"
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password"
-                    className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
                 <button
                     type="button"
-                    className="absolute right-3 top-3 text-gray-400 text-2xl"
+                    className="absolute right-3 top-3 text-gray-400 text-3xl"
                     onClick={() => setShowPassword(!showPassword)}
                 >
                     {showPassword ? <VscEyeClosed /> : <VscEye />}
