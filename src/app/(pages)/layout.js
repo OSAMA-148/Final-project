@@ -20,7 +20,7 @@ export default function HomeLayout({ children }) {
                 <IoIosArrowBack />
             </Link>
             {/* صورة المستخدم في كل الصفحات */}
-            <div className="absolute left-3.5 top-48 lg:top-22 flex justify-center items-center">
+            <div className="absolute left-3.5 top-22  flex justify-center items-center">
                 <Image
                     width={40}
                     height={40}
