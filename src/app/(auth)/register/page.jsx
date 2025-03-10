@@ -106,7 +106,7 @@ const Register = () => {
                     />
                     <button
                         type="button"
-                        className="absolute right-3 top-3 text-gray-500"
+                        className="absolute right-3 top-3 text-gray-500 text-2xl"
                         onClick={() => setShowPassword(!showPassword)}
                     >
                         {showPassword ? <VscEyeClosed /> : <VscEye />}
@@ -131,7 +131,7 @@ const Register = () => {
                     />
                     <button
                         type="button"
-                        className="absolute right-3 top-3 text-gray-500"
+                        className="absolute right-3 top-3 text-gray-500 text-2xl"
                         onClick={() =>
                             setShowConfirmPassword(!showConfirmPassword)
                         }

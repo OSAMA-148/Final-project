@@ -2,7 +2,7 @@
 import axios from "axios";
 import { RegisterFormSchema } from "@/lib/rules";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
 
 const API_BASE_URL = "http://authenticationd.runasp.net/api/account";
 
@@ -72,14 +72,12 @@ export async function login(state, formData, router) {
 
     try {
         const data = await fetchData("login", "POST", loginData);
-        console.log("بيانات الاستجابة:", data);
-        sessionStorage.setItem("token", data.token);
+
+        //  حفظ التوكن في الـ Cookies
+        Cookies.set("token", data.token, { expires: 1, secure: true });
 
         toast.success("تم تسجيل الدخول بنجاح! مرحبًا بك 👋");
-        console.log("👉 يتم التوجيه الآن إلى /home...");
-        if (typeof window !== "undefined") {
-            router.push("/home");
-        }
+        router.push("/home");
 
         return { success: true, token: data.token };
     } catch (error) {

@@ -4,6 +4,9 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { FiLogOut } from "react-icons/fi";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
 
 const page = () => {
     const [menuVisible, setMenuVisible] = useState(false);
@@ -11,10 +14,11 @@ const page = () => {
     const toggleMenu = () => {
         setMenuVisible(!menuVisible);
     };
-
+    const router = useRouter();
     const handleLogout = () => {
-        // Logout logic here (e.g., clearing tokens, redirecting, etc.)
-        console.log("Logged out");
+        Cookies.remove("token"); // 🗑️ حذف التوكن من الـ Cookies
+        toast.info("تم تسجيل الخروج بنجاح!");
+        router.push("/login");
     };
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -72,12 +76,10 @@ const page = () => {
                                         </span>
                                     </Link>
                                 </li>
-                                <li className="flex justify-center items-center hover:bg-gray-100 transition ease-in-out cursor-pointer">
-                                    <button
-                                        onClick={handleLogout}
-                                        className=""
-                                        href="/login"
-                                    ></button>
+                                <li
+                                    onClick={handleLogout}
+                                    className="flex justify-center items-center hover:bg-gray-100 transition ease-in-out cursor-pointer"
+                                >
                                     <FiLogOut className="text-2xl" />
                                     <span className="ml-4 font-bold">
                                         Logout

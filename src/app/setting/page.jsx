@@ -5,9 +5,22 @@ import { FaUser } from "react-icons/fa6";
 import { FaEnvelope } from "react-icons/fa6";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
+import Cookies from "js-cookie";
+import { toast } from "react-toastify";
+import { useEffect } from "react";
 const Setting = () => {
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
+
+    const router = useRouter();
+    const handleLogout = async () => {
+        Cookies.remove("token");
+        toast.info("تم تسجيل الخروج بنجاح!");
+
+        await new Promise((resolve) => setTimeout(resolve, 500));
+        router.replace("/login");
+    };
 
     return (
         <>
@@ -66,18 +79,18 @@ const Setting = () => {
                 </div>
                 {/* Login Button */}
                 <div className="relative mb-4 flex flex-col space-y-4">
-                    <Link
+                    <button
                         href="home"
                         className="w-full bg-green-700 text-white py-2 rounded-full text-lg font-semibold px-24 hover:bg-green-900 transition-colors duration-250"
                     >
                         Register
-                    </Link>
-                    <Link
-                        href="/"
+                    </button>
+                    <button
+                        onClick={handleLogout}
                         className="w-full bg-red-600 text-white py-2 rounded-full text-lg font-semibold px-24 hover:bg-red-700 transition-colors duration-250"
                     >
                         Logout
-                    </Link>
+                    </button>
                 </div>
             </form>
         </>
