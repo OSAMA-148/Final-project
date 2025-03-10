@@ -39,6 +39,7 @@ const page = () => {
     };
     const router = useRouter();
     const handleLogout = () => {
+        localStorage.removeItem("profileImage");
         Cookies.remove("token"); // 🗑️ حذف التوكن من الـ Cookies
         toast.info("logged out successfully!");
         router.push("/login");
@@ -67,7 +68,7 @@ const page = () => {
                     >
                         <Image
                             priority={true}
-                            src={profileImage || "/default.png"} // عرض الصورة من الـ Context إذا كانت موجودة
+                            src={profileImage || "/defult.png"} // عرض الصورة من الـ Context إذا كانت موجودة
                             alt="Profile Picture"
                             width={50}
                             height={50}

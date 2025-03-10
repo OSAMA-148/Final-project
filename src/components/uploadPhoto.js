@@ -29,7 +29,7 @@ export default function UploadPhoto() {
                     height={80}
                     objectFit="cover"
                     layout="responsive"
-                    src={profileImage || "/default.png"}
+                    src={profileImage || "/defult.png"}
                     alt="Profile"
                     className="w-full h-full object-cover"
                 />
