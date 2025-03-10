@@ -1,7 +1,44 @@
+"use client";
+import axios from "axios";
 import { RegisterFormSchema } from "@/lib/rules";
+import { toast } from "react-toastify";
+import { useRouter } from "next/navigation";
 
+const API_BASE_URL = "http://authenticationd.runasp.net/api/account";
 
-export async function register(state, formData) {
+// ✅ دالة مرنة لإرسال الطلبات عبر Axios
+async function fetchData(endpoint, method, body) {
+    try {
+        const { data } = await axios({
+            method,
+            url: `${API_BASE_URL}/${endpoint}`,
+            data: body,
+            headers: {
+                "Content-Type": "application/json",
+                accept: "text/plain",
+            },
+        });
+
+        if (!data || Object.keys(data).length === 0) {
+            throw new Error("لم يتم استلام بيانات من السيرفر.");
+        }
+
+        return data;
+    } catch (error) {
+        console.error(
+            `❌ Error in ${endpoint}:`,
+            error.response?.data || error.message
+        );
+
+        const errorMessage =
+            error.response?.data?.errors?.general?.[0] ||
+            error.response?.data?.errors?.[0] ||
+            "حدث خطأ أثناء المعالجة.";
+        throw new Error(errorMessage);
+    }
+}
+
+export async function register(state, formData, router) {
     const validatedFields = RegisterFormSchema.safeParse({
         name: formData.get("name"),
         email: formData.get("email"),
@@ -16,54 +53,36 @@ export async function register(state, formData) {
         };
     }
 
-    // إرسال بيانات التسجيل إلى الـ API
-    const response = await fetch(
-        "http://authenticationd.runasp.net/api/account/register",
-        {
-            method: "POST",
-            body: JSON.stringify(validatedFields.data),
-            headers: {
-                "Content-Type": "application/json",
-                "accept": "text/plain",
-            },
-        }
-    );
+    try {
+        await fetchData("register", "POST", validatedFields.data);
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        return {
-            errors: errorData.errors || { general: ["Registration failed."] },
-        };
+        toast.success("تم التسجيل بنجاح! يُرجى تسجيل الدخول الآن.");
+        router.push("/login"); 
+
+        return { success: true };
+    } catch (error) {
+        return { errors: { general: [error.message] } };
     }
-
-    // ✅ بعد نجاح التسجيل، نجرب تسجيل الدخول تلقائيًا بنفس البيانات
-    return await login(null, formData);
 }
+export async function login(state, formData, router) {
+    const loginData = {
+        email: formData.get("email"),
+        password: formData.get("password"),
+    };
 
-export async function login(state, formData) {
-    const response = await fetch(
-        "http://authenticationd.runasp.net/api/account/login",
-        {
-            method: "POST",
-            body: JSON.stringify({
-                email: formData.get("email"),
-                password: formData.get("password"),
-            }),
-            headers: {
-                "Content-Type": "application/json",
-                accept: "text/plain",
-            },
+    try {
+        const data = await fetchData("login", "POST", loginData);
+        console.log("بيانات الاستجابة:", data);
+        sessionStorage.setItem("token", data.token);
+
+        toast.success("تم تسجيل الدخول بنجاح! مرحبًا بك 👋");
+        console.log("👉 يتم التوجيه الآن إلى /home...");
+        if (typeof window !== "undefined") {
+            router.push("/home");
         }
-    );
 
-    if (!response.ok) {
-        const errorData = await response.json();
-        return { errors: errorData.errors || { general: ["Login failed."] } };
+        return { success: true, token: data.token };
+    } catch (error) {
+        return { errors: { general: [error.message] } };
     }
-
-    const data = await response.json();
-    localStorage.setItem("token", data.token); // ✅ حفظ التوكن بعد تسجيل الدخول
-
-    return { success: true, token: data.token };
 }
-

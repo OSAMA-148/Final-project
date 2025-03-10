@@ -6,7 +6,7 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import UploadPhoto from "@/components/uploadPhoto";
-import { register } from "@/action/auth"; // ✅ استيراد دالة التسجيل
+import { register } from "@/action/auth";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -31,7 +31,7 @@ const Register = () => {
         setLoading(true);
         setErrors({});
 
-        const result = await register(null, new FormData(e.target));
+        const result = await register(null, new FormData(e.target), router);
 
         if (result.errors) {
             setErrors(result.errors);

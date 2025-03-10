@@ -4,13 +4,16 @@ import { FaUser, FaLock } from "react-icons/fa";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { useState } from "react";
 import { login } from "@/action/auth";
-
+import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
     const [formData, setFormData] = useState({ email: "", password: "" });
     const [showPassword, setShowPassword] = useState(false);
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
+    const router = useRouter();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -21,13 +24,13 @@ const Login = () => {
         setLoading(true);
         setErrors({});
 
-        const result = await login(null, new FormData(e.target));
+        const result = await login(null, new FormData(e.target), router); // ⬅️ مرر router هنا
 
         if (result.errors) {
             setErrors(result.errors);
         } else {
-            alert("Login successful!");
-            window.location.href = "/home"; // ✅ التوجيه بعد تسجيل الدخول
+            // toast.success("تم تسجيل الدخول بنجاح! مرحبًا بك 👋");
+            router.push("/home"); // ✅ سيتم التوجيه الآن بشكل صحيح
         }
 
         setLoading(false);
@@ -63,7 +66,7 @@ const Login = () => {
                     placeholder="Password"
                     className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
-                
+
                 <button
                     type="button"
                     className="absolute right-3 top-3 text-gray-400 text-3xl"
@@ -86,7 +89,7 @@ const Login = () => {
             <div className="flex justify-center">
                 <span className="font-medium">Don't have an account?</span>
                 <Link href="/register" className="text-blue-500 ml-1 underline">
-                Register
+                    Register
                 </Link>
             </div>
         </form>

@@ -76,6 +76,7 @@ const page = () => {
                                     <button
                                         onClick={handleLogout}
                                         className=""
+                                        href="/login"
                                     ></button>
                                     <FiLogOut className="text-2xl" />
                                     <span className="ml-4 font-bold">
