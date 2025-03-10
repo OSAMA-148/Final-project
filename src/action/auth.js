@@ -77,7 +77,7 @@ export async function login(formData, router) {
     }
 
     try {
-        await new Promise((resolve) => setTimeout(resolve, 1000)); 
+        await new Promise((resolve) => setTimeout(resolve, 1000));
         const data = await fetchData("login", "POST", loginData);
 
         // التحقق من صحة التوكن قبل تخزينه
@@ -91,12 +91,38 @@ export async function login(formData, router) {
             sameSite: "Strict",
         });
 
-        toast.success("logged in successfully👋");
+        toast.success("تم تسجيل الدخول بنجاح 👋");
         router.push("/home");
 
         return { success: true, token: data.token };
     } catch (error) {
-        return { errors: { general: [error.message] } };
+        let errorMessage = "حدث خطأ غير متوقع. يُرجى المحاولة لاحقًا.";
+        if (error.response) {
+            // أخطاء من السيرفر
+            switch (error.response.status) {
+                case 401:
+                    errorMessage = "بيانات الدخول غير صحيحة.";
+                    break;
+                case 403:
+                    errorMessage = "كلمة السر غير صحيحة.";
+                    break;
+                case 500:
+                    errorMessage = "خطأ في السيرفر. يُرجى المحاولة لاحقًا.";
+                    break;
+                default:
+                    errorMessage = error.response.data.message || errorMessage;
+            }
+        } else if (error.request) {
+            // لم يتم استلام رد من السيرفر
+            errorMessage =
+                "لم يتم استلام رد من السيرفر. يُرجى التحقق من الاتصال بالإنترنت.";
+        } else {
+            // أخطاء أخرى
+            errorMessage = error.message;
+        }
+
+        toast.error(errorMessage);
+        return { errors: { general: [errorMessage] } };
     }
 }
 
