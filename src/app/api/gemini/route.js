@@ -1,7 +1,6 @@
 export async function POST(req) {
     try {
         const body = await req.json();
-        console.log("Request Body:", body); // ✅ طباعة الطلب للتأكد
 
         const { prompt } = body;
         if (!prompt) {
@@ -25,7 +24,7 @@ export async function POST(req) {
         });
 
         const data = await res.json();
-        console.log("API Response:", data); // ✅ طباعة رد API
+        console.log("API Response:", data);  
 
         if (data.candidates && data.candidates.length > 0) {
             return Response.json(
@@ -39,7 +38,7 @@ export async function POST(req) {
             );
         }
     } catch (error) {
-        console.error("Error:", error); // ✅ طباعة الأخطاء
+        console.error("Error:", error); 
         return Response.json({ error: error.message }, { status: 500 });
     }
 }

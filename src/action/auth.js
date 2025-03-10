@@ -17,11 +17,17 @@ export async function register(state, formData) {
     }
 
     // إرسال بيانات التسجيل إلى الـ API
-    const response = await fetch("/api/register", {
-        method: "POST",
-        body: JSON.stringify(validatedFields.data),
-        headers: { "Content-Type": "application/json" },
-    });
+    const response = await fetch(
+        "http://authenticationd.runasp.net/api/account/register",
+        {
+            method: "POST",
+            body: JSON.stringify(validatedFields.data),
+            headers: {
+                "Content-Type": "application/json",
+                "accept": "text/plain",
+            },
+        }
+    );
 
     if (!response.ok) {
         const errorData = await response.json();
@@ -35,14 +41,20 @@ export async function register(state, formData) {
 }
 
 export async function login(state, formData) {
-    const response = await fetch("/api/login", {
-        method: "POST",
-        body: JSON.stringify({
-            email: formData.get("email"),
-            password: formData.get("password"),
-        }),
-        headers: { "Content-Type": "application/json" },
-    });
+    const response = await fetch(
+        "http://authenticationd.runasp.net/api/account/login",
+        {
+            method: "POST",
+            body: JSON.stringify({
+                email: formData.get("email"),
+                password: formData.get("password"),
+            }),
+            headers: {
+                "Content-Type": "application/json",
+                accept: "text/plain",
+            },
+        }
+    );
 
     if (!response.ok) {
         const errorData = await response.json();

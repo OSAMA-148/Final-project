@@ -36,7 +36,7 @@ const Register = () => {
         if (result.errors) {
             setErrors(result.errors);
         } else {
-            router.push("/home"); // ✅ توجيه المستخدم للصفحة الرئيسية بعد تسجيل الدخول التلقائي
+            router.push("/login"); // ✅ توجيه المستخدم للصفحة الرئيسية بعد تسجيل الدخول التلقائي
         }
 
         setLoading(false);

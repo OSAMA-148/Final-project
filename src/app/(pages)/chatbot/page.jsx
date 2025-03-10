@@ -70,7 +70,7 @@ export default function Chat() {
     };
 
     return (
-        <div className="w-[80%] mx-auto bg-transparent rounded-lg p-4 mb-1">
+        <div className="w-[80%] mx-auto bg-transparent rounded-lg p-4 mb-34">
             <div className="flex justify-end items-center mb-2">
                 <motion.button
                     whileTap={{ scale: 0.9 }}
@@ -81,14 +81,14 @@ export default function Chat() {
                     <h1>New Chat</h1>
                 </motion.button>
             </div>
-            <div className="h-75 overflow-y-auto p-4 rounded-lg flex flex-col border border-gray-400">
+            <div className="h-40 overflow-y-auto p-4 rounded-lg flex flex-col border border-gray-400">
                 {messages.map((msg, index) => (
                     <motion.div
                         key={index}
                         initial={{ opacity: 0, y: 10 }}
                         animate={{ opacity: 1, y: 0 }}
                         transition={{ duration: 0.5 }}
-                        className={`mb-2 p-3 rounded-lg max-w-1/2 ${
+                        className={`mb-1 p-3 rounded-lg max-w-1/2 ${
                             msg.sender === "user"
                                 ? "bg-blue-300 self-start"
                                 : "bg-blue-400 self-end"
@@ -102,7 +102,7 @@ export default function Chat() {
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{
-                            duration: 0.5,
+                            duration: 0.8,
                             repeat: Infinity,
                             repeatType: "reverse",
                         }}

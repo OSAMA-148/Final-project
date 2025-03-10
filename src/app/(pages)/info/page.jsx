@@ -3,9 +3,9 @@ import { motion } from "framer-motion";
 
 export default function InfoPage() {
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-6">
+        <div className="min-h-screen flex flex-col items-center justify-center p-6 mb-28">
             <motion.h1
-                className="text-3xl font-bold text-green-700 mb-6"
+                className="text-3xl font-bold text-green-700 mb-2"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -25,12 +25,12 @@ export default function InfoPage() {
             </motion.p>
 
             <motion.div
-                className="mt-8 p-6 shadow-lg rounded-lg max-w-lg"
+                className="mt-8 p-6 shadow-l rounded-lg w-[90%]"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}
             >
-                <h2 className="text-xl font-semibold text-green-600">
+                <h2 className="text-2xl font-semibold text-green-600">
                     How It Works:
                 </h2>
                 <ul className="list-disc list-inside mt-2 text-gray-600 font-bold w-96">

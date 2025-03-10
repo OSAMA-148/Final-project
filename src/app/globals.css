@@ -16,12 +16,29 @@
         --foreground: #ededed;
     }
 }
+#menu::before {
+    content: "";
+    border-width: 10px;
+    border-style: solid;
+    border-color: transparent transparent #f0eeee transparent;
+    position: absolute;
+    top: -20px;
+    left: 15px;
+}
+#menu li:not(:last-child){
+    border-bottom: 1px solid #ddd;
+}
 
+#menu li {
+    padding: 5px;
+    color: #171717;
+    text-decoration: none;
+}
 body {
-    background-image: url("/background.jpg"); /* استخدم المسار داخل مجلد public */
-    background-size: cover; /* تغطية الشاشة بالكامل */
-    background-position: center; /* توسيط الصورة */
-    background-attachment: fixed; /* تثبيت الخلفية */
+    background-image: url("/background.jpg"); 
+    background-size: cover; 
+    background-position: center; 
+    background-attachment: fixed; 
     width: 100vw;
     height: 100vh;
     overflow: hidden;
@@ -33,5 +50,4 @@ body {
         background-position: center;
         background-repeat: no-repeat;
     }
-    
 }

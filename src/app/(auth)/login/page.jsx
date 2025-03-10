@@ -63,6 +63,7 @@ const Login = () => {
                     placeholder="Password"
                     className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
+                
                 <button
                     type="button"
                     className="absolute right-3 top-3 text-gray-400 text-3xl"
