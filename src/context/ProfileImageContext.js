@@ -1,21 +1,24 @@
 "use client";
+
 import { createContext, useContext, useState, useEffect } from "react";
 
 const ProfileImageContext = createContext();
 
-export function ProfileImageProvider({ children }) {
-    const [profileImage, setProfileImage] = useState(null);
+export const useProfileImage = () => useContext(ProfileImageContext);
+
+export const ProfileImageProvider = ({ children }) => {
+    const [profileImage, setProfileImage] = useState("/profile.png");
 
     useEffect(() => {
-        const savedImage = localStorage.getItem("profileImage");
-        if (savedImage) {
-            setProfileImage(savedImage);
+        const storedImage = localStorage.getItem("profileImage");
+        if (storedImage) {
+            setProfileImage(storedImage);
         }
     }, []);
 
-    const updateProfileImage = (imageData) => {
-        localStorage.setItem("profileImage", imageData);
-        setProfileImage(imageData);
+    const updateProfileImage = (newImage) => {
+        setProfileImage(newImage);
+        localStorage.setItem("profileImage", newImage);
     };
 
     return (
@@ -25,8 +28,4 @@ export function ProfileImageProvider({ children }) {
             {children}
         </ProfileImageContext.Provider>
     );
-}
-
-export function useProfileImage() {
-    return useContext(ProfileImageContext);
-}
+};

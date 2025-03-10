@@ -4,17 +4,36 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState, useRef, useEffect } from "react";
 import { FiLogOut } from "react-icons/fi";
+import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { useProfileImage } from "@/context/ProfileImageContext";
 import { useUser } from "@/context/UserContext";
 
+
 const page = () => {
     const { profileImage } = useProfileImage();
     const { fullName } = useUser();
     const [menuVisible, setMenuVisible] = useState(false);
     const menuRef = useRef(null);
+        const { updateProfileImage } = useProfileImage();
+
+
+    const handleImageChange = (e) => {
+        const file = e.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = (event) => {
+                const imageUrl = event.target.result;
+                updateProfileImage(imageUrl); // ← تحديث الصورة في الـ Context
+            };
+            reader.readAsDataURL(file);
+        }
+    };
+
+
+
     const toggleMenu = () => {
         setMenuVisible(!menuVisible);
     };
@@ -60,13 +79,27 @@ const page = () => {
                                 id="menu"
                                 className="absolute top-[61px] left-0 bg-white border border-gray-300 rounded-xl shadow-xl w-32 p-1 justify-center items-center space-y-1.5"
                             >
-                                <li className="text-center font-bold  hover:bg-gray-100 transition ease-in-out">
+                                <li className="text-center font-bold  hover:bg-gray-200 transition ease-in-out">
                                     <span className=" font-bold">
                                         {fullName || "User"}
                                     </span>
                                 </li>
+                                <li className="hover:bg-gray-100 transition ease-in-out cursor-pointer">
+                                    <label className="flex items-center justify-center cursor-pointer">
+                                        <input
+                                            type="file"
+                                            accept="image/*"
+                                            onChange={handleImageChange}
+                                            className="hidden"
+                                        />
+                                        <VscGitPullRequestGoToChanges className="text-5xl" />
+                                        <span className="ml-4 font-bold">
+                                            Change Picture
+                                        </span>
+                                    </label>
+                                </li>
 
-                                <li className="hover:bg-gray-100 transition ease-in-out">
+                                <li className="hover:bg-gray-200 transition ease-in-out">
                                     <Link
                                         href="/setting"
                                         className="flex justify-center"
@@ -84,7 +117,7 @@ const page = () => {
                                 </li>
                                 <li
                                     onClick={handleLogout}
-                                    className="flex justify-center items-center hover:bg-gray-100 transition ease-in-out cursor-pointer"
+                                    className="flex justify-center items-center hover:bg-gray-200 transition ease-in-out cursor-pointer"
                                 >
                                     <FiLogOut className="text-2xl" />
                                     <span className="ml-4 font-bold">

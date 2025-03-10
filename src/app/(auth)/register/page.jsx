@@ -25,6 +25,11 @@ const Register = () => {
     const router = useRouter();
     const { setFullName } = useUser();
 
+
+
+
+
+
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
