@@ -16,7 +16,7 @@ const Setting = () => {
     const router = useRouter();
     const handleLogout = async () => {
         Cookies.remove("token");
-        toast.info("تم تسجيل الخروج بنجاح!");
+        toast.info("logged out successfully!");
 
         await new Promise((resolve) => setTimeout(resolve, 500));
         router.replace("/login");

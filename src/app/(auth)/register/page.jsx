@@ -7,6 +7,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import UploadPhoto from "@/components/uploadPhoto";
 import { register } from "@/action/auth";
+import { ClipLoader } from "react-spinners";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -151,7 +152,11 @@ const Register = () => {
                     className="w-full bg-green-700 text-white py-2 rounded-full text-lg font-semibold shadow-md hover:bg-green-800 transition duration-300 disabled:bg-gray-500"
                     disabled={loading}
                 >
-                    {loading ? "Registering..." : "Register"}
+                    {loading ? (
+                        <ClipLoader color="#ffffff" size={30} />
+                    ) : (
+                        "Register"
+                    )}
                 </button>
             </form>
         </div>

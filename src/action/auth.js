@@ -4,7 +4,7 @@ import { RegisterFormSchema } from "@/lib/rules";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 
-const API_BASE_URL = "http://authenticationd.runasp.net/api/account";
+const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // ✅ دالة مرنة لإرسال الطلبات عبر Axios
 async function fetchData(endpoint, method, body) {
@@ -30,11 +30,7 @@ async function fetchData(endpoint, method, body) {
             error.response?.data || error.message
         );
 
-        const errorMessage =
-            error.response?.data?.errors?.general?.[0] ||
-            error.response?.data?.errors?.[0] ||
-            "حدث خطأ أثناء المعالجة.";
-        throw new Error(errorMessage);
+        throw new Error("حدث خطأ غير متوقع. يُرجى المحاولة لاحقًا.");
     }
 }
 
@@ -57,30 +53,58 @@ export async function register(state, formData, router) {
         await fetchData("register", "POST", validatedFields.data);
 
         toast.success("تم التسجيل بنجاح! يُرجى تسجيل الدخول الآن.");
-        router.push("/login"); 
+        router.push("/login");
 
         return { success: true };
     } catch (error) {
         return { errors: { general: [error.message] } };
     }
 }
-export async function login(state, formData, router) {
-    const loginData = {
-        email: formData.get("email"),
-        password: formData.get("password"),
-    };
+
+export async function login(formData, router) {
+    const loginData =
+        formData instanceof FormData
+            ? {
+                  email: formData.get("email"),
+                  password: formData.get("password"),
+              }
+            : {
+                  email: formData.email,
+                  password: formData.password,
+              };
+    if (!formData || !formData.email || !formData.password) {
+        return { errors: { general: ["البيانات غير مكتملة."] } };
+    }
 
     try {
+        await new Promise((resolve) => setTimeout(resolve, 1000)); 
         const data = await fetchData("login", "POST", loginData);
 
-        //  حفظ التوكن في الـ Cookies
-        Cookies.set("token", data.token, { expires: 1, secure: true });
+        // التحقق من صحة التوكن قبل تخزينه
+        if (!isTokenValid(data.token)) {
+            throw new Error("التوكن غير صالح.");
+        }
 
-        toast.success("تم تسجيل الدخول بنجاح! مرحبًا بك 👋");
+        Cookies.set("token", data.token, {
+            expires: 1,
+            secure: true,
+            sameSite: "Strict",
+        });
+
+        toast.success("logged in successfully👋");
         router.push("/home");
 
         return { success: true, token: data.token };
     } catch (error) {
         return { errors: { general: [error.message] } };
+    }
+}
+
+function isTokenValid(token) {
+    try {
+        const { exp } = JSON.parse(atob(token.split(".")[1]));
+        return exp * 1000 > Date.now();
+    } catch {
+        return false;
     }
 }

@@ -5,7 +5,7 @@ import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { useState } from "react";
 import { login } from "@/action/auth";
 import { useRouter } from "next/navigation";
-import { toast } from "react-toastify";
+import { ClipLoader } from "react-spinners";
 import "react-toastify/dist/ReactToastify.css";
 
 const Login = () => {
@@ -24,13 +24,12 @@ const Login = () => {
         setLoading(true);
         setErrors({});
 
-        const result = await login(null, new FormData(e.target), router); // ⬅️ مرر router هنا
+        const result = await login(formData, router);
 
         if (result.errors) {
             setErrors(result.errors);
         } else {
-            // toast.success("تم تسجيل الدخول بنجاح! مرحبًا بك 👋");
-            router.push("/home"); // ✅ سيتم التوجيه الآن بشكل صحيح
+            router.push("/home");
         }
 
         setLoading(false);
@@ -81,10 +80,10 @@ const Login = () => {
 
             <button
                 type="submit"
-                className="mx-auto py-2 bg-blue-500 text-white rounded-full text-center px-28 disabled:bg-gray-500 cursor-pointer hover:bg-blue-600 transition-all duration-200"
+                className="mx-auto py-2 bg-blue-500 text-white rounded-full text-center px-30 disabled:bg-gray-500 cursor-pointer hover:bg-blue-600 transition-all duration-200"
                 disabled={loading}
             >
-                {loading ? "Logging in..." : "Login"}
+                {loading ? <ClipLoader color="#ffffff" size={30} /> : "Login"}
             </button>
             <div className="flex justify-center">
                 <span className="font-medium">Don't have an account?</span>

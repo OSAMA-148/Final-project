@@ -17,8 +17,9 @@ const page = () => {
     const router = useRouter();
     const handleLogout = () => {
         Cookies.remove("token"); // 🗑️ حذف التوكن من الـ Cookies
-        toast.info("تم تسجيل الخروج بنجاح!");
+        toast.info("logged out successfully!");
         router.push("/login");
+        
     };
     useEffect(() => {
         const handleClickOutside = (event) => {

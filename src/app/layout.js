@@ -10,7 +10,7 @@ export default function RootLayout({ children }) {
     return (
         <html lang="en">
             <body className="antialiased">
-                <ToastContainer position="top-center" autoClose={3000} />
+                <ToastContainer position="top-center" autoClose={2000} />
                 {children}
             </body>
         </html>
