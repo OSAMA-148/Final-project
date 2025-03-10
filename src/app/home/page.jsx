@@ -7,8 +7,12 @@ import { FiLogOut } from "react-icons/fi";
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
+import { useProfileImage } from "@/context/ProfileImageContext";
+import { useUser } from "@/context/UserContext";
 
 const page = () => {
+    const { profileImage } = useProfileImage();
+    const { fullName } = useUser();
     const [menuVisible, setMenuVisible] = useState(false);
     const menuRef = useRef(null);
     const toggleMenu = () => {
@@ -19,7 +23,6 @@ const page = () => {
         Cookies.remove("token"); // 🗑️ حذف التوكن من الـ Cookies
         toast.info("logged out successfully!");
         router.push("/login");
-        
     };
     useEffect(() => {
         const handleClickOutside = (event) => {
@@ -45,7 +48,7 @@ const page = () => {
                     >
                         <Image
                             priority={true}
-                            src="/profile.png"
+                            src={profileImage || "/default.png"} // عرض الصورة من الـ Context إذا كانت موجودة
                             alt="Profile Picture"
                             width={50}
                             height={50}
@@ -58,7 +61,9 @@ const page = () => {
                                 className="absolute top-[61px] left-0 bg-white border border-gray-300 rounded-xl shadow-xl w-32 p-1 justify-center items-center space-y-1.5"
                             >
                                 <li className="text-center font-bold  hover:bg-gray-100 transition ease-in-out">
-                                    <span className=" font-bold">Name</span>
+                                    <span className=" font-bold">
+                                        {fullName || "User"}
+                                    </span>
                                 </li>
 
                                 <li className="hover:bg-gray-100 transition ease-in-out">

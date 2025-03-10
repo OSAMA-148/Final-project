@@ -3,16 +3,13 @@ import Image from "next/image";
 import { IoIosArrowBack } from "react-icons/io";
 import Link from "next/link";
 import { useState, useEffect } from "react";
+import { useProfileImage } from "@/context/ProfileImageContext";
+import { useUser } from "@/context/UserContext";
 
 export default function HomeLayout({ children }) {
-    const [profileImage, setProfileImage] = useState(null);
+    const { profileImage } = useProfileImage();
+    const { fullName } = useUser();
 
-    useEffect(() => {
-        const savedImage = localStorage.getItem("profileImage");
-        if (savedImage) {
-            setProfileImage(savedImage);
-        }
-    }, []);
     return (
         <>
             {/* أيقونة الرجوع */}
@@ -29,7 +26,9 @@ export default function HomeLayout({ children }) {
                     className="w-12 h-12 rounded-full border border-gray-300"
                     priority={true}
                 />
-                <span className="block ml-2 font-bold text-2xl">Name</span>
+                <span className="block ml-2 font-bold text-2xl">
+                    {fullName || "User"}
+                </span>
             </div>
             <main className="flex justify-center items-center w-full h-full">
                 {children}

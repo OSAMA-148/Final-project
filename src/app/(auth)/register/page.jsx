@@ -8,6 +8,7 @@ import { useRouter } from "next/navigation";
 import UploadPhoto from "@/components/uploadPhoto";
 import { register } from "@/action/auth";
 import { ClipLoader } from "react-spinners";
+import { useUser } from "@/context/UserContext";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -22,6 +23,7 @@ const Register = () => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const { setFullName } = useUser();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -37,7 +39,10 @@ const Register = () => {
         if (result.errors) {
             setErrors(result.errors);
         } else {
-            router.push("/login"); // ✅ توجيه المستخدم للصفحة الرئيسية بعد تسجيل الدخول التلقائي
+            const registeredFullName = formData.name; // ← استخراج الاسم الحقيقي
+            setFullName(registeredFullName); // ← حفظ الاسم الحقيقي في السياق
+            localStorage.setItem("fullName", registeredFullName); // ← تخزين الاسم الحقيقي في localStorage
+            router.push("/login");
         }
 
         setLoading(false);
