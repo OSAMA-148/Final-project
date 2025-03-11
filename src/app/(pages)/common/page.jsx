@@ -1,6 +1,7 @@
 "use client";
-import { useState } from "react";
-import { motion } from "framer-motion";
+import { useState, useEffect } from "react";
+import useEmblaCarousel from "embla-carousel-react";
+import { FaArrowRight, FaArrowLeft } from "react-icons/fa";
 
 const diseases = [
     {
@@ -21,62 +22,112 @@ const diseases = [
         image: "/Root-Rot.webp",
         description: "Caused by overwatering and poor drainage.",
     },
+    {
+        id: 4,
+        name: "Downy Mildew",
+        image: "/Downy-Mildew.jpg",
+        description: "Mold growth on the underside of leaves.",
+    },
+    {
+        id: 5,
+        name: "Anthracnose",
+        image: "/anthracnose.jpg",
+        description: "Dark lesions on leaves, stems, and fruits.",
+    },
+    {
+        id: 6,
+        name: "Rust",
+        image: "/Rust.webp",
+        description: "Orange or reddish-brown spots on leaves.",
+    },
+    {
+        id: 7,
+        name: "Fusarium Wilt",
+        image: "/Fusarium-Wilt.jpg",
+        description: "Fungal infection causing wilting and yellowing.",
+    },
+    {
+        id: 8,
+        name: "Bacterial Leaf Spot",
+        image: "/bacterial-leaf-spot.webp",
+        description: "Dark water-soaked spots on leaves.",
+    },
+    {
+        id: 9,
+        name: "Botrytis Blight",
+        image: "/Botrytis-Blight.jpg",
+        description: "Gray mold affecting flowers and fruits.",
+    },
 ];
 
 export default function DiseasesPage() {
     const [search, setSearch] = useState("");
+    const [emblaRef, emblaApi] = useEmblaCarousel({ loop: true });
+
+    useEffect(() => {
+        if (emblaApi) emblaApi.scrollTo(0);  
+    }, [emblaApi]);
 
     const filteredDiseases = diseases.filter((d) =>
         d.name.toLowerCase().includes(search.toLowerCase())
     );
 
-    return (
-        <div className="min-h-screen p-6 flex flex-col items-center pt-28">
-            <motion.h2
-                initial={{ opacity: 0, y: -20 }}
-                animate={{ opacity: 1, y: 0 }}
-                className="text-green-700 font-bold text-2xl mb-4"
-            >
-                🌿 Common Regional Diseases
-            </motion.h2>
+    const scrollPrev = () => emblaApi && emblaApi.scrollPrev();
+    const scrollNext = () => emblaApi && emblaApi.scrollNext();
 
-            {/* Search Input */}
-            <motion.input
-                initial={{ opacity: 0, scale: 0.9 }}
-                animate={{ opacity: 1, scale: 1 }}
-                transition={{ duration: 0.3 }}
+    return (
+        <div className="min-h-screen p-6 flex flex-col items-center pt-30">
+
+
+            <input
                 type="text"
                 placeholder="Search for a disease..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full max-w-md border border-gray-300 p-2 rounded-md mb-6"
+                className="w-full max-w-md border border-gray-300 p-2 rounded-md mb-1"
             />
 
-            {/* Disease Cards */}
-            <motion.div
-                className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-            >
-                {filteredDiseases.map((disease) => (
-                    <motion.div
-                        key={disease.id}
-                        whileHover={{ scale: 1.05 }}
-                        className="bg-white p-4 rounded-lg shadow-md w-72 text-center cursor-pointer"
-                    >
-                        <img
-                            src={disease.image}
-                            alt={disease.name}
-                            className="w-full h-40 object-cover rounded-md mb-3"
-                        />
-                        <h3 className="font-bold text-lg">{disease.name}</h3>
-                        <p className="text-gray-600 text-sm">
-                            {disease.description}
-                        </p>
-                    </motion.div>
-                ))}
-            </motion.div>
+            <div className="relative w-5xl">
+                <div className="overflow-hidden" ref={emblaRef}>
+                    <div className="flex">
+                        {filteredDiseases.map((disease) => (
+                            <div
+                                key={disease.id}
+                                className="flex-[0_0_33.333%] p-2"
+                            >
+                                <div className="bg-white rounded-2xl shadow-md p-4 text-center">
+                                    <img
+                                        src={disease.image}
+                                        alt={disease.name}
+                                        className="w-full h-35 object-cover rounded-xl mb-3"
+                                    />
+                                    <h3 className="font-bold text-green-800 text-lg mb-1">
+                                        {disease.name}
+                                    </h3>
+                                    <p className="text-gray-500 font-bold">
+                                        {disease.description}
+                                    </p>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                </div>
+
+                {/* أزرار التحكم */}
+                <button
+                    className="absolute top-1/2 -left-8 transform -translate-y-1/2 bg-green-700 text-white p-2 rounded-full shadow-lg"
+                    onClick={scrollPrev}
+                >
+                    <FaArrowLeft className="text-2xl" />
+                </button>
+
+                <button
+                    className="absolute top-1/2 -right-8 transform -translate-y-1/2 bg-green-700 text-white p-2 rounded-full shadow-lg"
+                    onClick={scrollNext}
+                >
+                    <FaArrowRight className="text-2xl" />
+                </button>
+            </div>
         </div>
     );
 }

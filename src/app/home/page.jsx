@@ -11,14 +11,12 @@ import { toast } from "react-toastify";
 import { useProfileImage } from "@/context/ProfileImageContext";
 import { useUser } from "@/context/UserContext";
 
-
 const page = () => {
     const { profileImage } = useProfileImage();
     const { fullName } = useUser();
     const [menuVisible, setMenuVisible] = useState(false);
     const menuRef = useRef(null);
-        const { updateProfileImage } = useProfileImage();
-
+    const { updateProfileImage } = useProfileImage();
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -31,8 +29,6 @@ const page = () => {
             reader.readAsDataURL(file);
         }
     };
-
-
 
     const toggleMenu = () => {
         setMenuVisible(!menuVisible);
