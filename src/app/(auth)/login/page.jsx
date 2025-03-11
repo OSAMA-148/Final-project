@@ -50,8 +50,8 @@ const Login = () => {
                     placeholder="Email"
                     className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
                 />
-                {errors.email && (
-                    <p className="text-red-500 text-sm">{errors.email[0]}</p>
+                {errors.general && (
+                    <p className="text-red-500 text-sm">{errors.general[0]}</p>
                 )}
             </div>
 
@@ -73,8 +73,8 @@ const Login = () => {
                 >
                     {showPassword ? <VscEyeClosed /> : <VscEye />}
                 </button>
-                {errors.password && (
-                    <p className="text-red-500 text-sm">{errors.password[0]}</p>
+                {errors.general && (
+                    <p className="text-red-500 text-sm">{errors.general[0]}</p>
                 )}
             </div>
 

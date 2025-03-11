@@ -41,7 +41,7 @@ const page = () => {
     const handleLogout = () => {
         localStorage.removeItem("profileImage");
         Cookies.remove("token"); // 🗑️ حذف التوكن من الـ Cookies
-        toast.info("logged out successfully!");
+        toast.dark("logged out successfully!");
         router.push("/login");
     };
     useEffect(() => {
@@ -67,8 +67,9 @@ const page = () => {
                         ref={menuRef}
                     >
                         <Image
+                            layout="intrinsic"
                             priority={true}
-                            src={profileImage || "/defult.png"} // عرض الصورة من الـ Context إذا كانت موجودة
+                            src={profileImage || "/defult.png"}
                             alt="Profile Picture"
                             width={50}
                             height={50}
@@ -110,6 +111,7 @@ const page = () => {
                                             alt="Settings"
                                             width={25}
                                             height={25}
+                                            layout="intrinsic"
                                         />
                                         <span className="ml-4 font-bold">
                                             setting
@@ -135,6 +137,7 @@ const page = () => {
                             width={35}
                             height={30}
                             className=""
+                            layout="intrinsic"
                         />
                     </Link>
                 </div>
@@ -171,6 +174,7 @@ const page = () => {
                             width={30}
                             height={30}
                             priority={true}
+                            layout="intrinsic"
                         />
                         <span className="mt-2 font-semibold font-serif">
                             Common Regional Diseases
@@ -187,6 +191,7 @@ const page = () => {
                             width={30}
                             height={30}
                             priority={true}
+                            layout="intrinsic"
                         />
                         <span className="mt-2 font-serif font-semibold">
                             Report a Problem
@@ -203,6 +208,7 @@ const page = () => {
                             width={30}
                             height={30}
                             priority={true}
+                            layout="intrinsic"
                         />
                         <span className="mt-2 font-serif font-semibold">
                             Fertilizers Usage Tips
@@ -221,6 +227,7 @@ const page = () => {
                             width={70}
                             height={50}
                             priority={true}
+                            layout="intrinsic"
                         />
                     </Link>
                 </div>

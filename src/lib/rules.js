@@ -8,25 +8,38 @@ export const RegisterFormSchema = z
             .trim(),
         email: z
             .string()
-            .email({ message: "Please enter a valid email." })
+            .regex(/^[a-zA-Z][a-zA-Z0-9._%+-]*@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/, {
+                message:
+                    "Please enter a valid email address that starts with a letter.",
+            })
             .trim(),
         password: z
             .string()
-            .min(1, { message: "Not be empty" })
-            .min(5, { message: "Be at least 5 characters long" })
-            .regex(/[a-zA-Z]/, { message: "Contain at least one letter." })
-            .regex(/[0-9]/, { message: "Contain at least one number." })
+            .min(8, { message: "Password must be at least 8 characters long." })
+            .regex(/[A-Z]/, {
+                message: "Password must contain at least one uppercase letter.",
+            })
+            .regex(/[a-z]/, {
+                message: "Password must contain at least one lowercase letter.",
+            })
+            .regex(/[0-9]/, {
+                message: "Password must contain at least one number.",
+            })
             .regex(/[^a-zA-Z0-9]/, {
-                message: "Contain at least one special character.",
+                message:
+                    "Password must contain at least one special character (e.g., !@#).",
             })
             .trim(),
-        confirmPassword: z.string().trim(),
+        confirmPassword: z
+            .string()
+            .trim()
+            .min(1, { message: "Please confirm your password." }),
     })
     .superRefine((val, ctx) => {
         if (val.password !== val.confirmPassword) {
             ctx.addIssue({
                 code: z.ZodIssueCode.custom,
-                message: "Password fields do not match.",
+                message: "Passwords do not match.",
                 path: ["confirmPassword"],
             });
         }

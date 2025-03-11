@@ -72,6 +72,7 @@ export async function login(formData, router) {
                   email: formData.email,
                   password: formData.password,
               };
+
     if (!formData || !formData.email || !formData.password) {
         return { errors: { general: ["البيانات غير مكتملة."] } };
     }
@@ -79,6 +80,11 @@ export async function login(formData, router) {
     try {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         const data = await fetchData("login", "POST", loginData);
+
+        // 🔹 التحقق من وجود رسالة خطأ داخل البيانات
+        if (data.error) {
+            throw new Error(data.error); // ← تأكد أن المفتاح "error" مطابق لما يرسله الـ API
+        }
 
         // التحقق من صحة التوكن قبل تخزينه
         if (!isTokenValid(data.token)) {
@@ -97,28 +103,14 @@ export async function login(formData, router) {
         return { success: true, token: data.token };
     } catch (error) {
         let errorMessage = "حدث خطأ غير متوقع. يُرجى المحاولة لاحقًا.";
-        if (error.response) {
-            // أخطاء من السيرفر
-            switch (error.response.status) {
-                case 401:
-                    errorMessage = "بيانات الدخول غير صحيحة.";
-                    break;
-                case 403:
-                    errorMessage = "كلمة السر غير صحيحة.";
-                    break;
-                case 500:
-                    errorMessage = "خطأ في السيرفر. يُرجى المحاولة لاحقًا.";
-                    break;
-                default:
-                    errorMessage = error.response.data.message || errorMessage;
-            }
-        } else if (error.request) {
-            // لم يتم استلام رد من السيرفر
-            errorMessage =
-                "لم يتم استلام رد من السيرفر. يُرجى التحقق من الاتصال بالإنترنت.";
-        } else {
-            // أخطاء أخرى
-            errorMessage = error.message;
+
+        // 🔹 التحقق من نص رسالة الخطأ مباشرة
+        if (error.message === "كلمة المرور غير صحيحة") {
+            errorMessage = "كلمة المرور التي أدخلتها غير صحيحة.";
+        } else if (error.message === "البريد الإلكتروني غير موجود") {
+            errorMessage = "البريد الإلكتروني الذي أدخلته غير صحيح.";
+        } else if (error.message === "التوكن غير صالح.") {
+            errorMessage = "حدث خطأ أثناء التحقق من صلاحية الجلسة.";
         }
 
         toast.error(errorMessage);
