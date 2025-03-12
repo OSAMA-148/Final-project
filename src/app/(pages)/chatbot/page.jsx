@@ -64,8 +64,8 @@ const handleSubmit = async (e) => {
     const handleNewChat = () => setMessages([]);
 
     return (
-        <div className="w-full mx-auto rounded-lg p-4 mb-44 bg-transparent">
-            <div className="flex justify-end items-center mb-2">
+        <div className="w-[75%] rounded-lg p-4 mb-56 bg-transparent">
+            <div className="flex justify-end items-center mb-1">
                 <motion.button
                     whileTap={{ scale: 0.9 }}
                     onClick={handleNewChat}
@@ -76,7 +76,7 @@ const handleSubmit = async (e) => {
                 </motion.button>
             </div>
 
-            <div className="h-50 overflow-y-auto p-4 rounded-lg flex flex-col border border-gray-400">
+            <div className="h-65 overflow-y-auto p-4 rounded-lg flex flex-col border border-gray-400 shadow-lg">
                 {messages.map((msg, index) => (
                     <motion.div
                         key={index}
@@ -112,7 +112,7 @@ const handleSubmit = async (e) => {
 
             <form
                 onSubmit={handleSubmit}
-                className="mt-4 flex border border-gray-400 rounded-lg overflow-hidden"
+                className="mt-2 flex border border-gray-400 rounded-lg overflow-hidden shadow-lg"
             >
                 <input
                     type="text"
