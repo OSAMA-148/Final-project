@@ -76,7 +76,7 @@ export default function DiseasesPage() {
     const scrollNext = () => emblaApi && emblaApi.scrollNext();
 
     return (
-        <div className="min-h-screen p-6 flex flex-col items-center pt-30">
+        <div className="min-h-screen flex flex-col items-center pt-[94px]">
 
 
             <input
@@ -84,7 +84,7 @@ export default function DiseasesPage() {
                 placeholder="Search for a disease..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full max-w-md border border-gray-300 p-2 rounded-md mb-1"
+                className="w-full max-w-md border border-gray-300 p-2 rounded-md mb-1 outline-none"
             />
 
             <div className="relative w-5xl">
@@ -93,18 +93,18 @@ export default function DiseasesPage() {
                         {filteredDiseases.map((disease) => (
                             <div
                                 key={disease.id}
-                                className="flex-[0_0_33.333%] p-2"
+                                className="flex-[0_0_33.333%] px-2"
                             >
-                                <div className="bg-white rounded-2xl shadow-md p-4 text-center">
+                                <div className="bg-transparent rounded-2xl shadow-md px-2 py-1 text-center">
                                     <img
                                         src={disease.image}
                                         alt={disease.name}
-                                        className="w-full h-35 object-cover rounded-xl mb-3"
+                                        className="w-full h-35 object-cover rounded-xl"
                                     />
-                                    <h3 className="font-bold text-green-800 text-lg mb-1">
+                                    <h3 className="font-bold text-green-800 text-md mb-1">
                                         {disease.name}
                                     </h3>
-                                    <p className="text-gray-500 font-bold">
+                                    <p className="text-gray-500">
                                         {disease.description}
                                     </p>
                                 </div>

@@ -3,7 +3,7 @@ import ImageUploader from "@/components/ImageUploader";
 
 const Upload = () => {
   return (
-      <div className="flex flex-col items-center justify-center min-h-screen pb-16">
+      <div className="flex flex-col items-center justify-center min-h-screen pb-44">
           
           <ImageUploader />
       </div>

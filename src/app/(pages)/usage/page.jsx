@@ -24,16 +24,16 @@ const tips = [
 ];
 const Usage = () => {
     return (
-        <div className="p-8 pb-0 max-w-lg mx-auto w-full">
+        <div className="p-8 mx-auto w-6xl h-[65%]">
             <motion.h2
-                className="text-green-700 font-bold text-xl flex items-center gap-2"
+                className="text-green-700 font-bold text-4xl flex items-center justify-center mb-10"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
                 🌱 Fertilizers Usage Tips
             </motion.h2>
-            <div className="mt-4 space-y-4 flex flex-col items-center">
+            <div className="mt-4 flex items-center justify-center space-x-2.5">
                 {tips.map((tip, index) => (
                     <motion.div
                         key={tip.id}

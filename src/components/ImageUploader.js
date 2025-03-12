@@ -40,16 +40,15 @@ export default function ImageUploader() {
     });
 
     return (
-        <div className="flex flex-col items-center">
-            {/* مربع السحب والإفلات يظهر فقط إذا لم تكن هناك صورة مرفوعة */}
+        <div className="flex flex-col items-center font-bold text-3xl">
             {!uploadedImage && (
                 <div
                     {...getRootProps()}
-                    className="border-2 border-dashed border-green-700 w-md h-40 flex justify-center items-center cursor-pointer bg-transparent hover:scale-125 transition"
+                    className="border-3 border-dashed border-green-700 w-3xl h-51 flex justify-center items-center cursor-pointer bg-transparent hover:scale-105 transition"
                 >
                     <input {...getInputProps()} />
                     {isDragActive ? (
-                        <p className="text-gray-700"> Drop Phot here...</p>
+                        <p className="text-gray-700"> Drop photo here...</p>
                     ) : (
                             <p className="text-gray-500">
                                 Drag & Drop your image here, or click to select
