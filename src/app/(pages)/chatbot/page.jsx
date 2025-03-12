@@ -2,6 +2,7 @@
 import { useState, useEffect, useRef } from "react";
 import { FaPaperPlane, FaPlus } from "react-icons/fa";
 import { motion } from "framer-motion";
+import axios from "axios";
 
 export default function Chat() {
     const [input, setInput] = useState("");
@@ -15,62 +16,55 @@ export default function Chat() {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        if (!input.trim()) return;
+const handleSubmit = async (e) => {
+    e.preventDefault();
+    if (!input.trim() || loading) return;
 
-        const newMessage = { text: input, sender: "user" };
-        setMessages([...messages, newMessage]);
-        setInput("");
-        setLoading(true);
+    const newMessage = { text: input, sender: "user" };
+    setMessages((prev) => [...prev, newMessage]);
+    setInput("");
+    setLoading(true);
 
-        try {
-            const res = await fetch(url, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({
-                    contents: [{ parts: [{ text: input }] }],
-                }),
-            });
+    if (!apiKey) {
+        setMessages((prev) => [
+            ...prev,
+            {
+                text: "API key is missing. Please contact support.",
+                sender: "bot",
+            },
+        ]);
+        setLoading(false);
+        return;
+    }
 
-            const data = await res.json();
-            console.log("API Response:", data);
-            setLoading(false);
+    try {
+        const { data } = await axios.post(
+            url,
+            {
+                contents: [{ parts: [{ text: input }] }],
+            },
+            { headers: { "Content-Type": "application/json" }, timeout: 10000 }
+        );
 
-            if (data.error) {
-                setMessages([
-                    ...messages,
-                    newMessage,
-                    { text: `Error: ${data.error.message}`, sender: "bot" },
-                ]);
-                return;
-            }
+        const textResponse =
+            data.candidates?.[0]?.content?.parts?.[0]?.text ||
+            "No response from AI";
+        setMessages((prev) => [...prev, { text: textResponse, sender: "bot" }]);
+    } catch (error) {
+        const errorMessage = error.response
+            ? `Error: ${error.response.data.error.message}`
+            : "Network error or timeout. Please try again.";
 
-            const textResponse =
-                data.candidates?.[0]?.content?.parts?.[0]?.text ||
-                "No response from AI";
-            setMessages([
-                ...messages,
-                newMessage,
-                { text: textResponse, sender: "bot" },
-            ]);
-        } catch (error) {
-            console.error("Fetch error:", error);
-            setLoading(false);
-            setMessages([
-                ...messages,
-                newMessage,
-                { text: "Error fetching response.", sender: "bot" },
-            ]);
-        }
-    };
+        setMessages((prev) => [...prev, { text: errorMessage, sender: "bot" }]);
+    } finally {
+        setLoading(false);
+    }
+};
 
-    const handleNewChat = () => {
-        setMessages([]);
-    };
+    const handleNewChat = () => setMessages([]);
 
     return (
-        <div className="w-[80%] mx-auto bg-transparent rounded-lg p-4 mb-34">
+        <div className="w-full mx-auto rounded-lg p-4 mb-44 bg-transparent">
             <div className="flex justify-end items-center mb-2">
                 <motion.button
                     whileTap={{ scale: 0.9 }}
@@ -81,7 +75,8 @@ export default function Chat() {
                     <h1>New Chat</h1>
                 </motion.button>
             </div>
-            <div className="h-40 overflow-y-auto p-4 rounded-lg flex flex-col border border-gray-400">
+
+            <div className="h-50 overflow-y-auto p-4 rounded-lg flex flex-col border border-gray-400">
                 {messages.map((msg, index) => (
                     <motion.div
                         key={index}
@@ -97,8 +92,9 @@ export default function Chat() {
                         {msg.text}
                     </motion.div>
                 ))}
+
                 {loading && (
-                    <motion.p
+                    <motion.div
                         initial={{ opacity: 0 }}
                         animate={{ opacity: 1 }}
                         transition={{
@@ -108,11 +104,12 @@ export default function Chat() {
                         }}
                         className="text-gray-500 text-sm self-end"
                     >
-                        Loading...
-                    </motion.p>
+                        Typing...
+                    </motion.div>
                 )}
                 <div ref={messagesEndRef} />
             </div>
+
             <form
                 onSubmit={handleSubmit}
                 className="mt-4 flex border border-gray-400 rounded-lg overflow-hidden"
@@ -123,11 +120,17 @@ export default function Chat() {
                     onChange={(e) => setInput(e.target.value)}
                     placeholder="Type a message..."
                     className="flex-1 p-2 focus:outline-none"
+                    disabled={loading}
                 />
                 <motion.button
                     whileTap={{ scale: 0.9 }}
                     type="submit"
-                    className="bg-green-500 text-white px-4 flex items-center justify-center hover:bg-green-600 transition"
+                    className={`bg-green-500 text-white px-4 flex items-center justify-center ${
+                        loading
+                            ? "opacity-50 cursor-not-allowed"
+                            : "hover:bg-green-600 transition"
+                    }`}
+                    disabled={loading}
                 >
                     <FaPaperPlane />
                 </motion.button>
