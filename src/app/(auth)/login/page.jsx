@@ -38,7 +38,7 @@ const Login = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="flex justify-center items-center gap-2 flex-col w-full h-full pb-15"
+            className="flex justify-center items-center gap-2 flex-col h-full pb-44"
         >
             <div className="relative mb-4">
                 <FaUser className="absolute left-3 top-3 text-gray-400 text-2xl" />
@@ -48,7 +48,7 @@ const Login = () => {
                     value={formData.email}
                     onChange={handleChange}
                     placeholder="Email"
-                    className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md"
                 />
                 {errors.general && (
                     <p className="text-red-500 text-sm">{errors.general[0]}</p>
@@ -63,7 +63,7 @@ const Login = () => {
                     value={formData.password}
                     onChange={handleChange}
                     placeholder="Password"
-                    className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500"
+                    className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md"
                 />
 
                 <button

@@ -54,7 +54,7 @@ const Register = () => {
     };
 
     return (
-        <div className="flex flex-col items-center min-h-screen p-6">
+        <div className="flex flex-col items-center min-h-screen px-6 py-2">
             {/* زر الرجوع */}
             <Link href="/login" className="absolute left-5 top-5 text-2xl">
                 <IoIosArrowBack className="text-gray-600" />
@@ -62,7 +62,7 @@ const Register = () => {
 
             {/* الفورم */}
             <form
-                className="w-full max-w-sm space-y-4 mt-48 lg:mt-20"
+                className="w-full max-w-md space-y-4 mt-2"
                 onSubmit={handleSubmit}
             >
                 {/* صورة البروفايل */}
@@ -79,7 +79,7 @@ const Register = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Name"
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg"
                     />
                     {errors.name && (
                         <p className="text-red-500 text-sm">{errors.name[0]}</p>
@@ -95,7 +95,7 @@ const Register = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="E-Mail"
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg"
                     />
                     {errors.email && (
                         <p className="text-red-500 text-sm">
@@ -113,7 +113,7 @@ const Register = () => {
                         value={formData.password}
                         onChange={handleChange}
                         placeholder="Password"
-                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg"
                     />
                     <button
                         type="button"
@@ -138,7 +138,7 @@ const Register = () => {
                         value={formData.confirmPassword}
                         onChange={handleChange}
                         placeholder="Confirm Password"
-                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md bg-gray-100 focus:outline-none focus:ring-2 focus:ring-green-500"
+                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg"
                     />
                     <button
                         type="button"

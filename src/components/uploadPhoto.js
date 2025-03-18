@@ -19,10 +19,10 @@ export default function UploadPhoto() {
     };
 
     return (
-        <div className="flex flex-col items-center mb-2">
+        <div className="flex justify-center items-center mb-2">
             <label
                 htmlFor="photo-upload"
-                className="relative w-20 h-20 rounded-full overflow-hidden border-2 border-gray-400 shadow-md cursor-pointer"
+                className="relative w-15 h-15 rounded-full overflow-hidden border-1 border-gray-400 shadow-md cursor-pointer"
             >
                 <Image
                     width={80}
@@ -41,7 +41,7 @@ export default function UploadPhoto() {
                     onChange={handleImageChange}
                 />
             </label>
-            <div className="flex flex-col items-center mt-2">
+            <div className="flex flex-col items-center ml-1.5">
                 <span className="font-semibold text-gray-700 text-sm">
                     Upload
                 </span>

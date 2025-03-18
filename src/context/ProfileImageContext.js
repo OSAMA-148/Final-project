@@ -7,7 +7,7 @@ const ProfileImageContext = createContext();
 export const useProfileImage = () => useContext(ProfileImageContext);
 
 export const ProfileImageProvider = ({ children }) => {
-    const [profileImage, setProfileImage] = useState("/profile.png");
+    const [profileImage, setProfileImage] = useState("/defult.png");
 
     useEffect(() => {
         const storedImage = localStorage.getItem("profileImage");
