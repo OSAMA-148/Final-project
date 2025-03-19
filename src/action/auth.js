@@ -87,18 +87,12 @@ export async function register(state, formData, router) {
 }
 
 export async function login(formData, router) {
-    const loginData =
-        formData instanceof FormData
-            ? {
-                  email: formData.get("email"),
-                  password: formData.get("password"),
-              }
-            : {
-                  email: formData.email,
-                  password: formData.password,
-              };
+    const loginData = {
+        email: formData.get("email"),
+        password: formData.get("password"),
+    };
 
-    if (!formData || !formData.email || !formData.password) {
+    if (!loginData.email || !loginData.password) {
         return { errors: { general: ["البيانات غير مكتملة."] } };
     }
 
@@ -106,12 +100,10 @@ export async function login(formData, router) {
         await new Promise((resolve) => setTimeout(resolve, 1000));
         const data = await fetchData("login", "POST", loginData);
 
-        // 🔹 التحقق من وجود رسالة خطأ داخل البيانات
         if (data.error) {
-            throw new Error(data.error); // ← تأكد أن المفتاح "error" مطابق لما يرسله الـ API
+            throw new Error(data.error);
         }
 
-        // التحقق من صحة التوكن قبل تخزينه
         if (!isTokenValid(data.token)) {
             throw new Error("التوكن غير صالح.");
         }
@@ -120,6 +112,8 @@ export async function login(formData, router) {
             expires: 1,
             secure: true,
             sameSite: "Strict",
+            path: "/",
+            httpOnly: true, // ✅ إضافة مزيد من الأمان
         });
 
         toast.success("تم تسجيل الدخول بنجاح 👋");
@@ -127,27 +121,18 @@ export async function login(formData, router) {
 
         return { success: true, token: data.token };
     } catch (error) {
-        let errorMessage = "حدث خطأ غير متوقع. يُرجى المحاولة لاحقًا.";
-
-        // 🔹 التحقق من نص رسالة الخطأ مباشرة
-        if (error.message === "كلمة المرور غير صحيحة") {
-            errorMessage = "كلمة المرور التي أدخلتها غير صحيحة.";
-        } else if (error.message === "البريد الإلكتروني غير موجود") {
-            errorMessage = "البريد الإلكتروني الذي أدخلته غير صحيح.";
-        } else if (error.message === "التوكن غير صالح.") {
-            errorMessage = "حدث خطأ أثناء التحقق من صلاحية الجلسة.";
-        }
-
-        toast.error(errorMessage);
-        return { errors: { general: [errorMessage] } };
+        toast.error(error.message);
+        return { errors: { general: [error.message] } };
     }
 }
 
+// ✅ تحديث دالة فحص التوكن باستخدام مكتبة JWT
 function isTokenValid(token) {
     try {
-        const { exp } = JSON.parse(atob(token.split(".")[1]));
-        return exp * 1000 > Date.now();
+        const decoded = jwt.decode(token);
+        return decoded && decoded.exp * 1000 > Date.now();
     } catch {
         return false;
     }
 }
+
