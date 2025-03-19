@@ -7,15 +7,17 @@ import Cookies from "js-cookie";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // ✅ دالة مرنة لإرسال الطلبات عبر Axios
-async function fetchData(endpoint, method, body) {
+async function fetchData(endpoint, method, body, isFormData = false) {
     try {
         const { data } = await axios({
             method,
             url: `${API_BASE_URL}/${endpoint}`,
             data: body,
             headers: {
-                "Content-Type": "application/json",
-                accept: "text/plain",
+                "accept": "text/plain",
+                "Content-Type": isFormData
+                    ? "multipart/form-data"
+                    : "application/json",
             },
         });
 
@@ -49,15 +51,38 @@ export async function register(state, formData, router) {
         };
     }
 
+    const finalFormData = new FormData();
+    finalFormData.append("name", validatedFields.data.name);
+    finalFormData.append("email", validatedFields.data.email);
+    finalFormData.append("password", validatedFields.data.password);
+    finalFormData.append(
+        "confirmPassword",
+        validatedFields.data.confirmPassword
+    );
+
+    const imageFile = formData.get("image");
+    if (imageFile && imageFile.size > 0) {
+        finalFormData.append("ProfileImage", imageFile);
+    }
+
     try {
-        await fetchData("register", "POST", validatedFields.data);
+        await fetchData("register", "POST", finalFormData, true);
 
         toast.success("تم التسجيل بنجاح! يُرجى تسجيل الدخول الآن.");
         router.push("/login");
 
         return { success: true };
     } catch (error) {
-        return { errors: { general: [error.message] } };
+        const errorMessage =
+            error.response?.data?.errors?.join(", ") || // ← التقاط الأخطاء في شكل Array
+            error.response?.data?.title ||
+            error.response?.data ||
+            error.message ||
+            "حدث خطأ غير متوقع.";
+
+        return {
+            errors: { general: [errorMessage] },
+        };
     }
 }
 
