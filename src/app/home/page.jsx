@@ -63,9 +63,7 @@ const page = () => {
                         ref={menuRef}
                     >
                         <Image
-                            layout="intrinsic"
-                            priority={true}
-                            src={profileImage || "/defult.png"}
+                            src={profileImage || "/default.png"}
                             alt="Profile Picture"
                             width={50}
                             height={50}

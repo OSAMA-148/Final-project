@@ -5,10 +5,10 @@ import { IoIosArrowBack } from "react-icons/io";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
-import UploadPhoto from "@/components/uploadPhoto";
 import { register } from "@/action/auth";
 import { ClipLoader } from "react-spinners";
 import { useUser } from "@/context/UserContext";
+import UploadProfileImage from "@/components/UploadProfileImage";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -18,6 +18,8 @@ const Register = () => {
         confirmPassword: "",
     });
 
+    const [profileImage, setProfileImage] = useState(null);
+
     const [showPassword, setShowPassword] = useState(false);
     const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const [errors, setErrors] = useState({});
@@ -25,28 +27,37 @@ const Register = () => {
     const router = useRouter();
     const { setFullName } = useUser();
 
-
-
-
-
-
+    // دالة تحديث البيانات النصية
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
+    // دالة اختيار الصورة
+    const handleImageSelect = (image) => {
+        setProfileImage(image);
+    };
+
+    // دالة إرسال البيانات
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
         setErrors({});
 
-        const result = await register(null, new FormData(e.target), router);
+        const formDataToSend = new FormData(e.target);
+
+        // ✅ إضافة الصورة إلى FormData
+        if (profileImage) {
+            formDataToSend.append("image", profileImage);
+        }
+
+        const result = await register(null, formDataToSend, router);
 
         if (result.errors) {
             setErrors(result.errors);
         } else {
-            const registeredFullName = formData.name; // ← استخراج الاسم الحقيقي
-            setFullName(registeredFullName); // ← حفظ الاسم الحقيقي في السياق
-            localStorage.setItem("fullName", registeredFullName); // ← تخزين الاسم الحقيقي في localStorage
+            const registeredFullName = formData.name;
+            setFullName(registeredFullName);
+            localStorage.setItem("fullName", registeredFullName);
             router.push("/login");
         }
 
@@ -67,7 +78,7 @@ const Register = () => {
             >
                 {/* صورة البروفايل */}
                 <div className="flex">
-                    <UploadPhoto />
+                    <UploadProfileImage onImageSelect={handleImageSelect} />
                 </div>
 
                 {/* اسم المستخدم */}

@@ -3,6 +3,7 @@ import axios from "axios";
 import { RegisterFormSchema } from "@/lib/rules";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
+import jwt from "jsonwebtoken";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -14,7 +15,7 @@ async function fetchData(endpoint, method, body, isFormData = false) {
             url: `${API_BASE_URL}/${endpoint}`,
             data: body,
             headers: {
-                "accept": "text/plain",
+                accept: "text/plain",
                 "Content-Type": isFormData
                     ? "multipart/form-data"
                     : "application/json",
@@ -27,15 +28,20 @@ async function fetchData(endpoint, method, body, isFormData = false) {
 
         return data;
     } catch (error) {
-        console.error(
-            `❌ Error in ${endpoint}:`,
-            error.response?.data || error.message
-        );
+        const errorMessage =
+            error.response?.data?.errors?.join(", ") ||
+            error.response?.data?.title ||
+            error.response?.data ||
+            error.message ||
+            "حدث خطأ غير متوقع. يُرجى المحاولة لاحقًا.";
 
-        throw new Error("حدث خطأ غير متوقع. يُرجى المحاولة لاحقًا.");
+        console.error(`❌ Error in ${endpoint}:`, errorMessage);
+
+        throw new Error(errorMessage);
     }
 }
 
+// ✅ دالة التسجيل
 export async function register(state, formData, router) {
     const validatedFields = RegisterFormSchema.safeParse({
         name: formData.get("name"),
@@ -52,17 +58,32 @@ export async function register(state, formData, router) {
     }
 
     const finalFormData = new FormData();
-    finalFormData.append("name", validatedFields.data.name);
-    finalFormData.append("email", validatedFields.data.email);
-    finalFormData.append("password", validatedFields.data.password);
+    finalFormData.append("Name", validatedFields.data.name);
+    finalFormData.append("Email", validatedFields.data.email);
+    finalFormData.append("Password", validatedFields.data.password);
     finalFormData.append(
-        "confirmPassword",
+        "ConfirmPassword",
         validatedFields.data.confirmPassword
     );
 
+    // ✅ تحقق من وجود صورة، وإرسال صورة افتراضية إذا لم تُرفع صورة
     const imageFile = formData.get("image");
+
     if (imageFile && imageFile.size > 0) {
         finalFormData.append("ProfileImage", imageFile);
+    } else {
+        try {
+            const placeholderImage = await fetch("/defult.png").then((res) =>
+                res.blob()
+            );
+            finalFormData.append(
+                "ProfileImage",
+                placeholderImage,
+                "default-profile.png"
+            );
+        } catch {
+            console.warn("⚠️ تعذر تحميل الصورة الافتراضية.");
+        }
     }
 
     try {
@@ -73,66 +94,57 @@ export async function register(state, formData, router) {
 
         return { success: true };
     } catch (error) {
-        const errorMessage =
-            error.response?.data?.errors?.join(", ") || // ← التقاط الأخطاء في شكل Array
-            error.response?.data?.title ||
-            error.response?.data ||
-            error.message ||
-            "حدث خطأ غير متوقع.";
-
         return {
-            errors: { general: [errorMessage] },
+            errors: { general: [error.message] },
         };
     }
 }
 
-export async function login(formData, router) {
-    const loginData = {
-        email: formData.get("email"),
-        password: formData.get("password"),
-    };
-
-    if (!loginData.email || !loginData.password) {
-        return { errors: { general: ["البيانات غير مكتملة."] } };
-    }
+// ✅ دالة تسجيل الدخول
+export const login = async (formData, router) => {
+    const data = new FormData();
+    data.append("Email", formData.email);
+    data.append("Password", formData.password);
 
     try {
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-        const data = await fetchData("login", "POST", loginData);
+        const response = await fetchData("login", "POST", data, true);
 
-        if (data.error) {
-            throw new Error(data.error);
+        const { token } = response;
+
+        if (!token) {
+            throw new Error("لم يتم استلام التوكن من السيرفر.");
         }
 
-        if (!isTokenValid(data.token)) {
-            throw new Error("التوكن غير صالح.");
+        // ✅ حفظ التوكن في الكوكيز لمدة 7 أيام
+        Cookies.set("token", token, { expires: 7 });
+
+        // ✅ تحقق من صلاحية التوكن
+        if (!isTokenValid(token)) {
+            throw new Error("التوكن غير صالح أو منتهي الصلاحية.");
         }
 
-        Cookies.set("token", data.token, {
-            expires: 1,
-            secure: true,
-            sameSite: "Strict",
-            path: "/",
-            httpOnly: true, // ✅ إضافة مزيد من الأمان
-        });
-
-        toast.success("تم تسجيل الدخول بنجاح 👋");
         router.push("/home");
 
-        return { success: true, token: data.token };
+        return { success: true };
     } catch (error) {
-        toast.error(error.message);
-        return { errors: { general: [error.message] } };
-    }
-}
+        const errorMessage =
+            error.response?.data?.errors?.join(", ") ||
+            error.response?.data?.title ||
+            error.response?.data ||
+            "فشل تسجيل الدخول. تحقق من البريد الإلكتروني أو كلمة المرور.";
 
-// ✅ تحديث دالة فحص التوكن باستخدام مكتبة JWT
+        console.error("❌ Error in login:", errorMessage);
+
+        return { errors: { general: [errorMessage] } };
+    }
+};
+
+// ✅ دالة فحص التوكن
 function isTokenValid(token) {
     try {
         const decoded = jwt.decode(token);
-        return decoded && decoded.exp * 1000 > Date.now();
+        return decoded && decoded.exp && decoded.exp * 1000 > Date.now();
     } catch {
         return false;
     }
 }
-
