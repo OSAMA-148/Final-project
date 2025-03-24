@@ -8,7 +8,7 @@ import jwt from "jsonwebtoken";
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
 // ✅ دالة مرنة لإرسال الطلبات عبر Axios
-async function fetchData(endpoint, method, body, isFormData = false) {
+async function fetchData(endpoint, method, body) {
     try {
         const { data } = await axios({
             method,
@@ -16,13 +16,14 @@ async function fetchData(endpoint, method, body, isFormData = false) {
             data: body,
             headers: {
                 accept: "text/plain",
-                "Content-Type": isFormData
-                    ? "multipart/form-data"
-                    : "application/json",
+                "Content-Type": "application/json",
             },
         });
 
-        if (!data || Object.keys(data).length === 0) {
+        if (
+            !data ||
+            (typeof data === "object" && Object.keys(data).length === 0)
+        ) {
             throw new Error("لم يتم استلام بيانات من السيرفر.");
         }
 
@@ -31,12 +32,11 @@ async function fetchData(endpoint, method, body, isFormData = false) {
         const errorMessage =
             error.response?.data?.errors?.join(", ") ||
             error.response?.data?.title ||
-            error.response?.data ||
+            error.response?.data?.message ||
             error.message ||
             "حدث خطأ غير متوقع. يُرجى المحاولة لاحقًا.";
 
-        console.error(`❌ Error in ${endpoint}:`, errorMessage);
-
+        console.error(`❌ خطأ في ${endpoint}:`, errorMessage);
         throw new Error(errorMessage);
     }
 }
@@ -57,37 +57,13 @@ export async function register(state, formData, router) {
         };
     }
 
-    const finalFormData = new FormData();
-    finalFormData.append("Name", validatedFields.data.name);
-    finalFormData.append("Email", validatedFields.data.email);
-    finalFormData.append("Password", validatedFields.data.password);
-    finalFormData.append(
-        "ConfirmPassword",
-        validatedFields.data.confirmPassword
-    );
-
-    // ✅ تحقق من وجود صورة، وإرسال صورة افتراضية إذا لم تُرفع صورة
-    const imageFile = formData.get("image");
-
-    if (imageFile && imageFile.size > 0) {
-        finalFormData.append("ProfileImage", imageFile);
-    } else {
-        try {
-            const placeholderImage = await fetch("/defult.png").then((res) =>
-                res.blob()
-            );
-            finalFormData.append(
-                "ProfileImage",
-                placeholderImage,
-                "default-profile.png"
-            );
-        } catch {
-            console.warn("⚠️ تعذر تحميل الصورة الافتراضية.");
-        }
-    }
-
     try {
-        await fetchData("register", "POST", finalFormData, true);
+        await fetchData("register", "POST", {
+            name: formData.get("name"),
+            email: formData.get("email"),
+            password: formData.get("password"),
+            confirmPassword: formData.get("confirmPassword"),
+        });
 
         toast.success("تم التسجيل بنجاح! يُرجى تسجيل الدخول الآن.");
         router.push("/login");
@@ -99,6 +75,7 @@ export async function register(state, formData, router) {
         };
     }
 }
+
 
 // ✅ دالة تسجيل الدخول
 export const login = async (formData, router) => {

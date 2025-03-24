@@ -43,22 +43,12 @@ const Register = () => {
         setLoading(true);
         setErrors({});
 
-        const formDataToSend = new FormData(e.target);
-
-        // ✅ إضافة الصورة إلى FormData
-        if (profileImage) {
-            formDataToSend.append("image", profileImage);
-        }
-
-        const result = await register(null, formDataToSend, router);
+        const result = await register(null, new FormData(e.target));
 
         if (result.errors) {
             setErrors(result.errors);
         } else {
-            const registeredFullName = formData.name;
-            setFullName(registeredFullName);
-            localStorage.setItem("fullName", registeredFullName);
-            router.push("/login");
+            router.push("/login"); // ✅ توجيه المستخدم للصفحة الرئيسية بعد تسجيل الدخول التلقائي
         }
 
         setLoading(false);
@@ -73,13 +63,11 @@ const Register = () => {
 
             {/* الفورم */}
             <form
-                className="w-full max-w-md space-y-4 mt-2"
+                className="w-full max-w-md space-y-4 mt-22"
                 onSubmit={handleSubmit}
             >
                 {/* صورة البروفايل */}
-                <div className="flex">
-                    <UploadProfileImage onImageSelect={handleImageSelect} />
-                </div>
+                
 
                 {/* اسم المستخدم */}
                 <div className="relative">
