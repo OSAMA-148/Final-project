@@ -26,17 +26,17 @@ const UploadPhoto = () => {
     };
 
     return (
-        <div className="flex items-center space-x-3">
-            <div className="w-14 h-14 rounded-full overflow-hidden border border-gray-300 shadow-md">
+        <div className="flex items-center space-x-3 ">
+            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-dashed border-green-500 shadow-md">
                 {image ? (
                     <img
                         src={image}
                         alt="Uploaded"
-                        className="w-15 h-15 object-fill"
+                        className="w-full h-full object-fill"
                     />
                 ) : (
                     <div className="w-full h-full bg-gray-200 flex items-center justify-center">
-                        <span className="text-gray-500">No Image</span>
+                        <span className="text-gray-500 text-2xl">+</span>
                     </div>
                 )}
             </div>

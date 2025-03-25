@@ -48,6 +48,9 @@ const Register = () => {
         if (result.errors) {
             setErrors(result.errors);
         } else {
+            const registeredFullName = formData.name; // ← استخراج الاسم الحقيقي
+            setFullName(registeredFullName); // ← حفظ الاسم الحقيقي في السياق
+            localStorage.setItem("fullName", registeredFullName);
             router.push("/login"); // ✅ توجيه المستخدم للصفحة الرئيسية بعد تسجيل الدخول التلقائي
         }
 
@@ -62,10 +65,7 @@ const Register = () => {
             </Link>
 
             {/* الفورم */}
-            <form
-                className="w-full max-w-md space-y-4 mt-22"
-                onSubmit={handleSubmit}
-            >
+            <form className="w-lg space-y-4 mt-[22px]" onSubmit={handleSubmit}>
                 {/* صورة البروفايل */}
                 <div className="flex">
                     <UploadPhoto></UploadPhoto>
