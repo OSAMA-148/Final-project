@@ -8,7 +8,7 @@ import { useRouter } from "next/navigation";
 import { register } from "@/action/auth";
 import { ClipLoader } from "react-spinners";
 import { useUser } from "@/context/UserContext";
-import UploadProfileImage from "@/components/UploadProfileImage";
+import UploadPhoto from "@/components/UploadPhoto";
 
 const Register = () => {
     const [formData, setFormData] = useState({
@@ -32,10 +32,10 @@ const Register = () => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    // دالة اختيار الصورة
-    const handleImageSelect = (image) => {
-        setProfileImage(image);
-    };
+    // // دالة اختيار الصورة
+    // const handleImageSelect = (image) => {
+    //     setProfileImage(image);
+    // };
 
     // دالة إرسال البيانات
     const handleSubmit = async (e) => {
@@ -43,7 +43,7 @@ const Register = () => {
         setLoading(true);
         setErrors({});
 
-        const result = await register(null, new FormData(e.target));
+        const result = await register(null, new FormData(e.target), router);
 
         if (result.errors) {
             setErrors(result.errors);
@@ -67,7 +67,9 @@ const Register = () => {
                 onSubmit={handleSubmit}
             >
                 {/* صورة البروفايل */}
-                
+                <div className="flex">
+                    <UploadPhoto></UploadPhoto>
+                </div>
 
                 {/* اسم المستخدم */}
                 <div className="relative">

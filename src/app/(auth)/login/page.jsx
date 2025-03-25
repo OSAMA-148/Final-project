@@ -86,7 +86,7 @@ const Login = () => {
                 {loading ? <ClipLoader color="#ffffff" size={30} /> : "Login"}
             </button>
             <div className="flex justify-center">
-                <span className="font-medium">Don't have an account?</span>
+                <span className="font-serif font-bold">Don't have an account?</span>
                 <Link href="/register" className="text-blue-500 ml-1 underline">
                     Register
                 </Link>

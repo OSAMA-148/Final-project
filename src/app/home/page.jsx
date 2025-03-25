@@ -141,10 +141,10 @@ const page = () => {
                 {/* Profile Picture and Welcome Text */}
 
                 {/* Buttons Section */}
-                <div className="flex flex-wrap justify-center gap-x-40 gap-y-10 -mt-28">
+                <div className="flex flex-wrap justify-center gap-x-41 gap-y-10 -mt-28">
                     <Link
                         href="/upload"
-                        className="bg-green-600 text-black p-4 rounded-lg flex flex-col items-center justify-center w-lg hover:bg-green-500 transition duration-300 ease-in-out"
+                        className="bg-green-600 text-black px-4 py-7 rounded-lg flex flex-col items-center justify-center w-lg hover:bg-green-500 transition duration-300 ease-in-out"
                     >
                         <Image
                             src="/uploadimage.svg"

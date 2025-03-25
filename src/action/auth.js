@@ -76,7 +76,6 @@ export async function register(state, formData, router) {
     }
 }
 
-
 // ✅ دالة تسجيل الدخول
 export const login = async (formData, router) => {
     const data = new FormData();
@@ -125,3 +124,16 @@ function isTokenValid(token) {
         return false;
     }
 }
+
+export const getUserNameFromToken = () => {
+    const token = Cookies.get("token");
+
+    if (!token) return null;
+
+    try {
+        const decoded = jwt.decode(token);
+        return decoded?.name || null; // استخراج الاسم من التوكن
+    } catch {
+        return null;
+    }
+};
