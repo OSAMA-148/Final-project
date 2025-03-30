@@ -9,7 +9,7 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body className="antialiased bg-[url(/back.png)] bg-cover bg-center h-screen w-screen overflow-hidden">
+            <body className="antialiased bg-[url(/background.png)] bg-cover bg-center h-screen w-screen overflow-hidden">
                 <ToastContainer position="top-center" autoClose={2000} />
                 <ContextProviders>{children}</ContextProviders>
             </body>
