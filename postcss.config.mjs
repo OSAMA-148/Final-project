@@ -1,6 +1,12 @@
 const config = {
     plugins: ["@tailwindcss/postcss"],
-    theme: {},
+    theme: {
+        extend: {
+            backgroundImage: {
+                "custom-bg": "url('/back.png')",
+            },
+        },
+    },
 };
 
 export default config;
