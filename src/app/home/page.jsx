@@ -35,8 +35,8 @@ const page = () => {
     };
     const router = useRouter();
     const handleLogout = () => {
-        localStorage.removeItem("profileImage");
-        localStorage.removeItem("fullName");
+        // localStorage.removeItem("profileImage");
+        // localStorage.removeItem("fullName");
         Cookies.remove("token"); // 🗑️ حذف التوكن من الـ Cookies
         toast.dark("logged out successfully!");
         router.push("/login");
