@@ -30,11 +30,11 @@ const Report = () => {
                 }
             );
 
-            toast.success("تم إرسال التقرير بنجاح!");
+            toast.success("Report sent successfully!");
             setText("");
         } catch (error) {
-            toast.error("فشل في إرسال التقرير. حاول مرة أخرى.");
-            console.error("❌ خطأ أثناء إرسال التقرير:", error);
+            toast.error("Failed to send the report. Please try again.");
+            console.error("❌ Error while sending the report:", error);
         } finally {
             setLoading(false);
         }
@@ -59,7 +59,7 @@ const Report = () => {
                     }`}
                     disabled={!text.trim() || loading}
                 >
-                    {loading ? "جاري الإرسال..." : "Send"}
+                    {loading ? "Sending..." : "Send"}
                 </button>
             </div>
         </div>
