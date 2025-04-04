@@ -13,7 +13,7 @@ export default function Home() {
             >
                 <Link
                     href="/login"
-                    className="bg-blue-700 w-48 py-2 px-32 rounded-full text-2xl text-white text-center min-w-[200px] hover:bg-blue-800 transition duration-300"
+                    className="bg-blue-500 w-48 py-2 px-32 rounded-full text-2xl text-white text-center min-w-[200px] hover:bg-blue-600 transition duration-300"
                 >
                     Login
                 </Link>
