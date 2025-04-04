@@ -9,9 +9,11 @@ export const metadata = {
 export default function RootLayout({ children }) {
     return (
         <html lang="en">
-            <body className="antialiased bg-[url(/background.jpg)] bg-cover bg-center h-screen w-screen overflow-hidden">
-                <ToastContainer position="top-center" autoClose={2000} />
-                <ContextProviders>{children}</ContextProviders>
+            <body className="antialiased">
+                <div className="bg-[url(/background.jpg)] bg-cover bg-center h-screen w-screen overflow-hidden">
+                    <ToastContainer position="top-center" autoClose={2000} />
+                    <ContextProviders>{children}</ContextProviders>
+                </div>
             </body>
         </html>
     );
