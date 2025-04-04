@@ -85,12 +85,7 @@ const Setting = () => {
                     >
                         Register
                     </button>
-                    <button
-                        onClick={handleLogout}
-                        className="w-full bg-red-600 text-white py-2 rounded-full text-lg font-semibold px-24 hover:bg-red-700 transition-colors duration-250"
-                    >
-                        Logout
-                    </button>
+                    
                 </div>
             </form>
         </>
