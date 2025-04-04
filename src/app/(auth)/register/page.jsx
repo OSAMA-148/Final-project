@@ -65,7 +65,7 @@ const Register = () => {
             </Link>
 
             {/* الفورم */}
-            <form className="w-lg space-y-4 mt-[22px]" onSubmit={handleSubmit}>
+            <form className="w-lg space-y-4 mt-5" onSubmit={handleSubmit}>
                 {/* صورة البروفايل */}
                 <div className="flex">
                     <UploadPhoto></UploadPhoto>
