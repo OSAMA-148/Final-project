@@ -65,7 +65,7 @@ export async function register(state, formData, router) {
             confirmPassword: formData.get("confirmPassword"),
         });
 
-        toast.success("تم التسجيل بنجاح! يُرجى تسجيل الدخول الآن.");
+        toast.success("Registration successful! Please log in now.");
         router.push("/login");
 
         return { success: true };
@@ -98,7 +98,7 @@ export const login = async (formData, router) => {
         if (!isTokenValid(token)) {
             throw new Error("التوكن غير صالح أو منتهي الصلاحية.");
         }
-
+        toast.success("You have successfully logged in!");
         router.push("/home");
 
         return { success: true };
@@ -107,7 +107,7 @@ export const login = async (formData, router) => {
             error.response?.data?.errors?.join(", ") ||
             error.response?.data?.title ||
             error.response?.data ||
-            "فشل تسجيل الدخول. تحقق من البريد الإلكتروني أو كلمة المرور.";
+            "Login failed. Check your email or password.";
 
         console.error("❌ Error in login:", errorMessage);
 
