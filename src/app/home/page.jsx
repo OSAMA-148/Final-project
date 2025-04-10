@@ -17,6 +17,7 @@ const page = () => {
     const [menuVisible, setMenuVisible] = useState(false);
     const menuRef = useRef(null);
     const { updateProfileImage } = useProfileImage();
+    // const queryClient = useQueryClient();
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -36,7 +37,6 @@ const page = () => {
     const router = useRouter();
     const handleLogout = () => {
         // localStorage.removeItem("profileImage");
-        // localStorage.removeItem("fullName");
         Cookies.remove("token"); // 🗑️ حذف التوكن من الـ Cookies
         toast.dark("logged out successfully!");
         router.push("/login");

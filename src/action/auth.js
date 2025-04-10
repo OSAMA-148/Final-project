@@ -4,6 +4,7 @@ import { RegisterFormSchema } from "@/lib/rules";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import jwt from "jsonwebtoken";
+import { useQueryClient } from "@tanstack/react-query";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
@@ -76,42 +77,52 @@ export async function register(state, formData, router) {
 }
 
 // ✅ دالة تسجيل الدخول
-export const login = async (formData, router) => {
-    const data = new FormData();
-    data.append("Email", formData.email);
-    data.append("Password", formData.password);
+export const useLogin = () => {
+    const queryClient = useQueryClient(); // ← إنشاء QueryClient
 
-    try {
-        const response = await fetchData("login", "POST", data, true);
+    const login = async (formData, router) => {
+        const data = new FormData();
+        data.append("Email", formData.email);
+        data.append("Password", formData.password);
 
-        const { token } = response;
+        try {
+            const response = await fetchData("login", "POST", data, true);
 
-        if (!token) {
-            throw new Error("لم يتم استلام التوكن من السيرفر.");
+            const { token } = response;
+
+            if (!token) {
+                throw new Error("لم يتم استلام التوكن من السيرفر.");
+            }
+
+            // ✅ حفظ التوكن في الكوكيز لمدة 7 أيام
+            Cookies.set("token", token, { expires: 7 });
+
+            // ✅ تحقق من صلاحية التوكن
+            if (!isTokenValid(token)) {
+                throw new Error("التوكن غير صالح أو منتهي الصلاحية.");
+            }
+
+            // ✅ تحديث اسم المستخدم بعد تسجيل الدخول
+            queryClient.invalidateQueries(["userName"]); // ← تحديث بيانات اسم المستخدم
+
+            toast.success("You have successfully logged in!");
+            router.push("/home");
+
+            return { success: true };
+        } catch (error) {
+            const errorMessage =
+                error.response?.data?.errors?.join(", ") ||
+                error.response?.data?.title ||
+                error.response?.data ||
+                "Login failed. Check your email or password.";
+
+            console.error("❌ Error in login:", errorMessage);
+
+            return { errors: { general: [errorMessage] } };
         }
+    };
 
-        // ✅ حفظ التوكن في الكوكيز لمدة 7 أيام
-        Cookies.set("token", token, { expires: 7 });
-
-        // ✅ تحقق من صلاحية التوكن
-        if (!isTokenValid(token)) {
-            throw new Error("التوكن غير صالح أو منتهي الصلاحية.");
-        }
-        toast.success("You have successfully logged in!");
-        router.push("/home");
-
-        return { success: true };
-    } catch (error) {
-        const errorMessage =
-            error.response?.data?.errors?.join(", ") ||
-            error.response?.data?.title ||
-            error.response?.data ||
-            "Login failed. Check your email or password.";
-
-        console.error("❌ Error in login:", errorMessage);
-
-        return { errors: { general: [errorMessage] } };
-    }
+    return login;
 };
 
 // ✅ دالة فحص التوكن

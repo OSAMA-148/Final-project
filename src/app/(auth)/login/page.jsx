@@ -3,7 +3,7 @@ import Link from "next/link";
 import { FaUser, FaLock } from "react-icons/fa";
 import { VscEye, VscEyeClosed } from "react-icons/vsc";
 import { useState } from "react";
-import { login } from "@/action/auth";
+import { useLogin } from "@/action/auth";
 import { useRouter } from "next/navigation";
 import { ClipLoader } from "react-spinners";
 import "react-toastify/dist/ReactToastify.css";
@@ -14,6 +14,7 @@ const Login = () => {
     const [errors, setErrors] = useState({});
     const [loading, setLoading] = useState(false);
     const router = useRouter();
+    const login = useLogin();
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -86,7 +87,9 @@ const Login = () => {
                 {loading ? <ClipLoader color="#ffffff" size={30} /> : "Login"}
             </button>
             <div className="flex justify-center">
-                <span className="font-serif font-bold">Don't have an account?</span>
+                <span className="font-serif font-bold">
+                    Don't have an account?
+                </span>
                 <Link href="/register" className="text-blue-500 ml-1 underline">
                     Register
                 </Link>
