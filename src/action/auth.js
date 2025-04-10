@@ -7,7 +7,6 @@ import jwt from "jsonwebtoken";
 
 const API_BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-// ✅ دالة مرنة لإرسال الطلبات عبر Axios
 async function fetchData(endpoint, method, body) {
     try {
         const { data } = await axios({
@@ -125,15 +124,18 @@ function isTokenValid(token) {
     }
 }
 
-export const getUserNameFromToken = () => {
-    const token = Cookies.get("token");
 
-    if (!token) return null;
 
-    try {
-        const decoded = jwt.decode(token);
-        return decoded?.name || null; // استخراج الاسم من التوكن
-    } catch {
-        return null;
-    }
-};
+
+// export const getUserNameFromToken = () => {
+//     const token = Cookies.get("token");
+
+//     if (!token) return null;
+
+//     try {
+//         const decoded = jwt.decode(token);
+//         return decoded?.name || null; // استخراج الاسم من التوكن
+//     } catch {
+//         return null;
+//     }
+// };
