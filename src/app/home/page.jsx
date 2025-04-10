@@ -96,7 +96,7 @@ const page = () => {
                                     </label>
                                 </li>
 
-                                <li className="hover:bg-gray-200 transition ease-in-out">
+                                {/* <li className="hover:bg-gray-200 transition ease-in-out">
                                     <Link
                                         href="/setting"
                                         className="flex justify-center"
@@ -112,7 +112,7 @@ const page = () => {
                                             setting
                                         </span>
                                     </Link>
-                                </li>
+                                </li> */}
                                 <li
                                     onClick={handleLogout}
                                     className="flex justify-center items-center hover:bg-gray-200 transition ease-in-out cursor-pointer"

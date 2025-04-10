@@ -20,7 +20,7 @@ const fetchUserName = async () => {
         }
     );
 
-    return response.data.name; // أو response.data.userName حسب الـ API
+    return response.data.name;
 };
 
 export const UserProvider = ({ children }) => {
@@ -31,7 +31,7 @@ export const UserProvider = ({ children }) => {
     } = useQuery({
         queryKey: ["userName"],
         queryFn: fetchUserName,
-        staleTime: 1000 * 10, // البيانات تظل صالحة لمدة 10 ثوانٍ فقط
+        staleTime: 1000 * 10, 
         cacheTime: 1000 * 60 * 10,
     });
 
