@@ -27,17 +27,10 @@ const Register = () => {
     const router = useRouter();
     const { setFullName } = useUser();
 
-    // دالة تحديث البيانات النصية
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
     };
 
-    // // دالة اختيار الصورة
-    // const handleImageSelect = (image) => {
-    //     setProfileImage(image);
-    // };
-
-    // دالة إرسال البيانات
     const handleSubmit = async (e) => {
         e.preventDefault();
         setLoading(true);
@@ -48,25 +41,27 @@ const Register = () => {
         if (result.errors) {
             setErrors(result.errors);
         } else {
-            
-            router.push("/login"); // ✅ توجيه المستخدم للصفحة الرئيسية بعد تسجيل الدخول التلقائي
+            router.push("/login");
         }
 
         setLoading(false);
     };
 
     return (
-        <div className="flex flex-col items-center min-h-screen px-6 py-2">
+        <div className="flex flex-col items-center px-4 py-4 h-full lg:px-20 md:px-10">
             {/* زر الرجوع */}
             <Link href="/login" className="absolute left-5 top-5 text-2xl">
                 <IoIosArrowBack className="text-gray-600" />
             </Link>
 
             {/* الفورم */}
-            <form className="w-lg space-y-4 mt-5" onSubmit={handleSubmit}>
+            <form
+                className="w-full max-w-md lg:max-w-lg space-y-4 mt-5"
+                onSubmit={handleSubmit}
+            >
                 {/* صورة البروفايل */}
-                <div className="flex">
-                    <UploadPhoto></UploadPhoto>
+                <div className="flex ">
+                    <UploadPhoto />
                 </div>
 
                 {/* اسم المستخدم */}
@@ -78,7 +73,7 @@ const Register = () => {
                         value={formData.name}
                         onChange={handleChange}
                         placeholder="Name"
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg"
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg text-sm lg:text-base"
                     />
                     {errors.name && (
                         <p className="text-red-500 text-sm">{errors.name[0]}</p>
@@ -94,7 +89,7 @@ const Register = () => {
                         value={formData.email}
                         onChange={handleChange}
                         placeholder="E-Mail"
-                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg"
+                        className="w-full pl-10 pr-4 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg text-sm lg:text-base"
                     />
                     {errors.email && (
                         <p className="text-red-500 text-sm">
@@ -112,7 +107,7 @@ const Register = () => {
                         value={formData.password}
                         onChange={handleChange}
                         placeholder="Password"
-                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg"
+                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg text-sm lg:text-base"
                     />
                     <button
                         type="button"
@@ -137,7 +132,7 @@ const Register = () => {
                         value={formData.confirmPassword}
                         onChange={handleChange}
                         placeholder="Confirm Password"
-                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md  focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg"
+                        className="w-full pl-10 pr-10 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-lg text-sm lg:text-base"
                     />
                     <button
                         type="button"
