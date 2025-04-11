@@ -48,9 +48,7 @@ const Register = () => {
         if (result.errors) {
             setErrors(result.errors);
         } else {
-            const registeredFullName = formData.name; // ← استخراج الاسم الحقيقي
-            setFullName(registeredFullName); // ← حفظ الاسم الحقيقي في السياق
-            localStorage.setItem("fullName", registeredFullName);
+            
             router.push("/login"); // ✅ توجيه المستخدم للصفحة الرئيسية بعد تسجيل الدخول التلقائي
         }
 

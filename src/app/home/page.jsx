@@ -66,15 +66,15 @@ const page = () => {
                         <Image
                             src={profileImage || "/defult.png"}
                             alt="Profile Picture"
-                            width={50}
-                            height={50}
+                            width={55}
+                            height={55}
                             className="rounded-full"
                             onClick={toggleMenu}
                         />
                         {menuVisible && (
                             <ul
                                 id="menu"
-                                className="absolute top-[61px] left-0 bg-white border border-gray-300 rounded-xl shadow-xl w-32 p-1 justify-center items-center space-y-1.5"
+                                className="absolute top-16 left-0 bg-white border border-gray-300 rounded-xl shadow-xl w-32 p-1 justify-center items-center space-y-1.5"
                             >
                                 <li className="text-center font-bold  hover:bg-gray-200 transition ease-in-out">
                                     <span className=" font-bold">
@@ -139,7 +139,6 @@ const page = () => {
             </header>
 
             <main className="pt-44">
-                {/* Profile Picture and Welcome Text */}
 
                 {/* Buttons Section */}
                 <div className="flex flex-wrap justify-center gap-x-41 gap-y-10 -mt-28">
