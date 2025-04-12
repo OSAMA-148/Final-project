@@ -31,8 +31,6 @@ export const UserProvider = ({ children }) => {
     } = useQuery({
         queryKey: ["userName"],
         queryFn: fetchUserName,
-        staleTime: 1000 * 10, 
-        cacheTime: 1000 * 60 * 10,
     });
 
     return (

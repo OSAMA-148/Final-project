@@ -10,14 +10,17 @@ import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { useProfileImage } from "@/context/ProfileImageContext";
 import { useUser } from "@/context/UserContext";
+import { useLanguage } from "@/context/LanguageContext";
+import Switch from "@/components/Switch";
 
 const page = () => {
     const { profileImage } = useProfileImage();
     const { fullName } = useUser();
+    const { language, setLanguageToEnglish, setLanguageToArabic } =
+        useLanguage();
     const [menuVisible, setMenuVisible] = useState(false);
     const menuRef = useRef(null);
     const { updateProfileImage } = useProfileImage();
-    // const queryClient = useQueryClient();
 
     const handleImageChange = (e) => {
         const file = e.target.files[0];
@@ -25,7 +28,7 @@ const page = () => {
             const reader = new FileReader();
             reader.onload = (event) => {
                 const imageUrl = event.target.result;
-                updateProfileImage(imageUrl); // ← تحديث الصورة في الـ Context
+                updateProfileImage(imageUrl);
             };
             reader.readAsDataURL(file);
         }
@@ -34,13 +37,22 @@ const page = () => {
     const toggleMenu = () => {
         setMenuVisible(!menuVisible);
     };
+
+    const handleLanguageToggle = (e) => {
+        if (e.target.checked) {
+            setLanguageToArabic();
+        } else {
+            setLanguageToEnglish();
+        }
+    };
+
     const router = useRouter();
     const handleLogout = () => {
-        // localStorage.removeItem("profileImage");
-        Cookies.remove("token"); // 🗑️ حذف التوكن من الـ Cookies
+        Cookies.remove("token");
         toast.dark("logged out successfully!");
         router.push("/login");
     };
+
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (menuRef.current && !menuRef.current.contains(event.target)) {
@@ -54,6 +66,7 @@ const page = () => {
             window.removeEventListener("mousedown", handleClickOutside);
         };
     }, []);
+
     return (
         <>
             {/* Header */}
@@ -68,17 +81,20 @@ const page = () => {
                             alt="Profile Picture"
                             width={55}
                             height={55}
-                            className="rounded-full"
+                            className="w-14 h-14 rounded-full border border-gray-300"
                             onClick={toggleMenu}
                         />
                         {menuVisible && (
                             <ul
                                 id="menu"
-                                className="absolute top-16 left-0 bg-white border border-gray-300 rounded-xl shadow-xl w-32 p-1 justify-center items-center space-y-1.5"
+                                className="absolute top-16 left-0 bg-white border border-gray-300 rounded-xl shadow-xl w-40 p-2 justify-center items-center space-y-2"
                             >
-                                <li className="text-center font-bold  hover:bg-gray-200 transition ease-in-out">
-                                    <span className=" font-bold">
-                                        {fullName || "User"}
+                                <li className="text-center font-bold hover:bg-gray-200 transition ease-in-out">
+                                    <span className="font-bold text-lg">
+                                        {fullName ||
+                                            (language === "en"
+                                                ? "User"
+                                                : "مستخدم")}
                                     </span>
                                 </li>
                                 <li className="hover:bg-gray-100 transition ease-in-out cursor-pointer">
@@ -91,35 +107,33 @@ const page = () => {
                                         />
                                         <VscGitPullRequestGoToChanges className="text-5xl" />
                                         <span className="ml-4 font-bold">
-                                            Change Picture
+                                            {language === "en"
+                                                ? "Change Picture"
+                                                : "تغيير الصورة"}
                                         </span>
                                     </label>
                                 </li>
-
-                                {/* <li className="hover:bg-gray-200 transition ease-in-out">
-                                    <Link
-                                        href="/setting"
-                                        className="flex justify-center"
-                                    >
-                                        <Image
-                                            src="/setting.png"
-                                            alt="Settings"
-                                            width={25}
-                                            height={25}
-                                            layout="intrinsic"
-                                        />
-                                        <span className="ml-4 font-bold">
-                                            setting
-                                        </span>
-                                    </Link>
-                                </li> */}
+                                {/* Toggle Switch for Language */}
+                                <li>
+                                    <Switch
+                                        language={language}
+                                        setLanguageToEnglish={
+                                            setLanguageToEnglish
+                                        }
+                                        setLanguageToArabic={
+                                            setLanguageToArabic
+                                        }
+                                    />
+                                </li>
                                 <li
                                     onClick={handleLogout}
                                     className="flex justify-center items-center hover:bg-gray-200 transition ease-in-out cursor-pointer"
                                 >
                                     <FiLogOut className="text-2xl" />
                                     <span className="ml-4 font-bold">
-                                        Logout
+                                        {language === "en"
+                                            ? "Logout"
+                                            : "تسجيل الخروج"}
                                     </span>
                                 </li>
                             </ul>
@@ -139,7 +153,6 @@ const page = () => {
             </header>
 
             <main className="pt-44">
-
                 {/* Buttons Section */}
                 <div className="flex flex-wrap justify-center gap-x-41 gap-y-10 -mt-28">
                     <Link
@@ -154,7 +167,7 @@ const page = () => {
                             priority={true}
                         />
                         <span className="mt-2 font-semibold font-serif">
-                            Upload Image
+                            {language === "en" ? "Upload Image" : " رفع صورة"}
                         </span>
                     </Link>
 
@@ -171,7 +184,9 @@ const page = () => {
                             layout="intrinsic"
                         />
                         <span className="mt-2 font-semibold font-serif">
-                            Common Regional Diseases
+                            {language === "en"
+                                ? "Common Diseases"
+                                : "الأمراض الشائعة"}
                         </span>
                     </Link>
 
@@ -188,7 +203,9 @@ const page = () => {
                             layout="intrinsic"
                         />
                         <span className="mt-2 font-serif font-semibold">
-                            Report a Problem
+                            {language === "en"
+                                ? "Report a Problem"
+                                : "الإبلاغ عن مشكلة"}
                         </span>
                     </Link>
 
@@ -205,7 +222,9 @@ const page = () => {
                             layout="intrinsic"
                         />
                         <span className="mt-2 font-serif font-semibold">
-                            Fertilizers Usage Tips
+                            {language === "en"
+                                ? "Fertilizers Usage Tips"
+                                : "نصائح استخدام الأسمدة"}
                         </span>
                     </Link>
                 </div>

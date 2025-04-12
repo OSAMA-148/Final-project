@@ -1,7 +1,35 @@
 "use client";
 import { motion } from "framer-motion";
+import { useLanguage } from "@/context/LanguageContext"; // ← استيراد اللغة
 
 export default function InfoPage() {
+    const { language } = useLanguage(); // ← الحصول على اللغة الحالية
+
+    const texts = {
+        en: {
+            title: "🌿 About DR-PLANT",
+            description:
+                "DR-PLANT helps farmers and plant lovers detect diseases using AI-powered image analysis. Simply upload a photo of your plant, and we’ll provide instant diagnosis and recommendations.",
+            howItWorks: "How It Works:",
+            steps: [
+                "📸 Upload a plant image.",
+                "🧐 AI analyzes the disease.",
+                "📋 Get diagnosis & treatment tips.",
+            ],
+        },
+        ar: {
+            title: "🌿 عن DR-PLANT",
+            description:
+                "DR-PLANT يساعد المزارعين ومحبي النباتات في اكتشاف الأمراض باستخدام تحليل الصور المدعوم بالذكاء الاصطناعي. قم فقط برفع صورة لنباتك، وسنقدم لك التشخيص والتوصيات فورًا.",
+            howItWorks: "كيف يعمل:",
+            steps: [
+                "📸 قم برفع صورة للنبات.",
+                "🧐 يقوم الذكاء الاصطناعي بتحليل المرض.",
+                "📋 احصل على التشخيص ونصائح العلاج.",
+            ],
+        },
+    };
+
     return (
         <div className="min-h-screen flex flex-col items-center justify-center mb-48 bg-ambe-200">
             <motion.h1
@@ -10,7 +38,7 @@ export default function InfoPage() {
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
             >
-                🌿 About DR-PLANT
+                {texts[language].title}
             </motion.h1>
 
             <motion.p
@@ -19,9 +47,7 @@ export default function InfoPage() {
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.7, delay: 0.3 }}
             >
-                DR-PLANT helps farmers and plant lovers detect diseases using
-                AI-powered image analysis. Simply upload a photo of your plant,
-                and we’ll provide instant diagnosis and recommendations.
+                {texts[language].description}
             </motion.p>
 
             <motion.div
@@ -31,16 +57,14 @@ export default function InfoPage() {
                 transition={{ duration: 0.5, delay: 0.5 }}
             >
                 <h2 className="text-2xl font-semibold text-green-600">
-                    How It Works:
+                    {texts[language].howItWorks}
                 </h2>
                 <ul className="list-disc list-inside mt-2 text-gray-600 font-bold wxl">
-                    <li>📸 Upload a plant image.</li>
-                    <li>🧐 AI analyzes the disease.</li>
-                    <li>📋 Get diagnosis & treatment tips.</li>
+                    {texts[language].steps.map((step, index) => (
+                        <li key={index}>{step}</li>
+                    ))}
                 </ul>
             </motion.div>
-
-
         </div>
     );
 }

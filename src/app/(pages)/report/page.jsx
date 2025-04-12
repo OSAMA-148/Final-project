@@ -4,12 +4,31 @@ import { useState } from "react";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
-
+import { useLanguage } from "@/context/LanguageContext"; // ← استيراد اللغة
 
 const API_BASE_URL2 = process.env.NEXT_PUBLIC_API_BASE_URL2;
+
 const Report = () => {
+    const { language } = useLanguage(); // ← الحصول على اللغة الحالية
     const [text, setText] = useState("");
     const [loading, setLoading] = useState(false);
+
+    const texts = {
+        en: {
+            placeholder: "Describe Your Problem",
+            send: "Send",
+            sending: "Sending...",
+            success: "Report sent successfully!",
+            error: "Failed to send the report. Please try again.",
+        },
+        ar: {
+            placeholder: "صف مشكلتك",
+            send: "إرسال",
+            sending: "جارٍ الإرسال...",
+            success: "تم إرسال التقرير بنجاح!",
+            error: "فشل في إرسال التقرير. حاول مرة أخرى.",
+        },
+    };
 
     const handleSubmit = async () => {
         if (!text.trim()) return;
@@ -25,15 +44,15 @@ const Report = () => {
                     headers: {
                         "Content-Type": "application/json",
                         Authorization: `Bearer ${token}`,
-                        "Accept": "*/*",
+                        Accept: "*/*",
                     },
                 }
             );
 
-            toast.success("Report sent successfully!");
+            toast.success(texts[language].success);
             setText("");
         } catch (error) {
-            toast.error("Failed to send the report. Please try again.");
+            toast.error(texts[language].error);
             console.error("❌ Error while sending the report:", error);
         } finally {
             setLoading(false);
@@ -44,7 +63,7 @@ const Report = () => {
         <div className="min-h-screen flex flex-col items-center justify-center p-4 w-full mb-[195px]">
             <div className="w-[70%] flex flex-col items-center">
                 <textarea
-                    placeholder="Describe Your Problem"
+                    placeholder={texts[language].placeholder}
                     className="w-full h-40 border border-gray-300 rounded-lg p-5 text-gray-700 text-xl focus:outline-none focus:ring-2 focus:ring-green-400 placeholder-gray-500 resize-none shadow-xl transition"
                     value={text}
                     onChange={(e) => setText(e.target.value)}
@@ -59,7 +78,7 @@ const Report = () => {
                     }`}
                     disabled={!text.trim() || loading}
                 >
-                    {loading ? "Sending..." : "Send"}
+                    {loading ? texts[language].sending : texts[language].send}
                 </button>
             </div>
         </div>

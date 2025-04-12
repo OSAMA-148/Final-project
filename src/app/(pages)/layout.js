@@ -19,15 +19,14 @@ export default function HomeLayout({ children }) {
             {/* صورة المستخدم في كل الصفحات */}
             <div className="absolute left-3.5 top-15 flex justify-center items-center">
                 <Image
-                    width={40}
-                    height={40}
+                    width={50}
+                    height={50}
                     src={profileImage || "/defult.png"}
                     alt="Profile"
-                    className="w-12 h-12 rounded-full border border-gray-300"
-                    priority={true}
+                    className="w-14 h-14 rounded-full border border-gray-300"
                 />
                 <span className="block ml-2 font-bold text-2xl">
-                    {fullName || "User"}
+                    {fullName}
                 </span>
             </div>
             <main className="flex justify-center items-center w-full h-full">

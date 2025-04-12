@@ -3,8 +3,10 @@ import { useState, useEffect, useRef } from "react";
 import { FaPaperPlane, FaPlus } from "react-icons/fa";
 import { motion } from "framer-motion";
 import axios from "axios";
+import { useLanguage } from "@/context/LanguageContext"; // ← استيراد اللغة
 
 export default function Chat() {
+    const { language } = useLanguage(); // ← الحصول على اللغة الحالية
     const [input, setInput] = useState("");
     const [messages, setMessages] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -12,54 +14,77 @@ export default function Chat() {
     const apiKey = process.env.NEXT_PUBLIC_GEMINI_API_KEY;
     const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${apiKey}`;
 
+    const texts = {
+        en: {
+            newChat: "New Chat",
+            typing: "Typing...",
+            placeholder: "Type a message...",
+            apiError: "API key is missing. Please contact support.",
+            networkError: "Network error or timeout. Please try again.",
+        },
+        ar: {
+            newChat: "دردشة جديدة",
+            typing: "يكتب...",
+            placeholder: "اكتب رسالة...",
+            apiError: "مفتاح API مفقود. يرجى الاتصال بالدعم.",
+            networkError: "خطأ في الشبكة أو انتهاء المهلة. حاول مرة أخرى.",
+        },
+    };
+
     useEffect(() => {
         messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
     }, [messages]);
 
-const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!input.trim() || loading) return;
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        if (!input.trim() || loading) return;
 
-    const newMessage = { text: input, sender: "user" };
-    setMessages((prev) => [...prev, newMessage]);
-    setInput("");
-    setLoading(true);
+        const newMessage = { text: input, sender: "user" };
+        setMessages((prev) => [...prev, newMessage]);
+        setInput("");
+        setLoading(true);
 
-    if (!apiKey) {
-        setMessages((prev) => [
-            ...prev,
-            {
-                text: "API key is missing. Please contact support.",
-                sender: "bot",
-            },
-        ]);
-        setLoading(false);
-        return;
-    }
+        if (!apiKey) {
+            setMessages((prev) => [
+                ...prev,
+                { text: texts[language].apiError, sender: "bot" },
+            ]);
+            setLoading(false);
+            return;
+        }
 
-    try {
-        const { data } = await axios.post(
-            url,
-            {
-                contents: [{ parts: [{ text: input }] }],
-            },
-            { headers: { "Content-Type": "application/json" }, timeout: 10000 }
-        );
+        try {
+            const { data } = await axios.post(
+                url,
+                {
+                    contents: [{ parts: [{ text: input }] }],
+                },
+                {
+                    headers: { "Content-Type": "application/json" },
+                    timeout: 10000,
+                }
+            );
 
-        const textResponse =
-            data.candidates?.[0]?.content?.parts?.[0]?.text ||
-            "No response from AI";
-        setMessages((prev) => [...prev, { text: textResponse, sender: "bot" }]);
-    } catch (error) {
-        const errorMessage = error.response
-            ? `Error: ${error.response.data.error.message}`
-            : "Network error or timeout. Please try again.";
+            const textResponse =
+                data.candidates?.[0]?.content?.parts?.[0]?.text ||
+                "No response from AI";
+            setMessages((prev) => [
+                ...prev,
+                { text: textResponse, sender: "bot" },
+            ]);
+        } catch (error) {
+            const errorMessage = error.response
+                ? `Error: ${error.response.data.error.message}`
+                : texts[language].networkError;
 
-        setMessages((prev) => [...prev, { text: errorMessage, sender: "bot" }]);
-    } finally {
-        setLoading(false);
-    }
-};
+            setMessages((prev) => [
+                ...prev,
+                { text: errorMessage, sender: "bot" },
+            ]);
+        } finally {
+            setLoading(false);
+        }
+    };
 
     const handleNewChat = () => setMessages([]);
 
@@ -72,7 +97,7 @@ const handleSubmit = async (e) => {
                     className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition flex items-center justify-center gap-1"
                 >
                     <FaPlus />
-                    <h1>New Chat</h1>
+                    <h1>{texts[language].newChat}</h1>
                 </motion.button>
             </div>
 
@@ -104,7 +129,7 @@ const handleSubmit = async (e) => {
                         }}
                         className="text-gray-500 text-sm self-end"
                     >
-                        Typing...
+                        {texts[language].typing}
                     </motion.div>
                 )}
                 <div ref={messagesEndRef} />
@@ -118,7 +143,7 @@ const handleSubmit = async (e) => {
                     type="text"
                     value={input}
                     onChange={(e) => setInput(e.target.value)}
-                    placeholder="Type a message..."
+                    placeholder={texts[language].placeholder}
                     className="flex-1 p-2 focus:outline-none"
                     disabled={loading}
                 />

@@ -5,14 +5,39 @@ import { useDropzone } from "react-dropzone";
 import { motion } from "framer-motion";
 import axios from "axios";
 import Cookies from "js-cookie";
-
+import { useLanguage } from "@/context/LanguageContext"; // ← استيراد اللغة
 
 const API_BASE_URL3 = process.env.NEXT_PUBLIC_API_BASE_URL3;
+
 export default function ImageUploader() {
+    const { language } = useLanguage(); // ← الحصول على اللغة الحالية
     const [uploadedImage, setUploadedImage] = useState(null);
     const [analysisResult, setAnalysisResult] = useState(null);
     const [loading, setLoading] = useState(false);
     const userToken = Cookies.get("token");
+
+    const texts = {
+        en: {
+            dragDrop: "Drag & Drop your image here, or click to select",
+            dropPhoto: "Drop photo here...",
+            scanning: "Scanning...",
+            result: "Result",
+            cancel: "Cancel ❌",
+            analyze: "Analyze 🔍",
+            uploadFailed: "❌ Failed to upload image:",
+            analyzeFailed: "❌ Failed to analyze image:",
+        },
+        ar: {
+            dragDrop: "اسحب وأفلت صورتك هنا، أو انقر لتحديدها",
+            dropPhoto: "أسقط الصورة هنا...",
+            scanning: "جارٍ الفحص...",
+            result: "Result",
+            cancel: "إلغاء ❌",
+            analyze: "تحليل 🔍",
+            uploadFailed: "❌ فشل رفع الصورة:",
+            analyzeFailed: "❌ فشل تحليل الصورة:",
+        },
+    };
 
     useEffect(() => {
         const savedImage = localStorage.getItem("uploadedImage");
@@ -39,7 +64,10 @@ export default function ImageUploader() {
             localStorage.setItem("imageToken", imageToken);
             setUploadedImage(URL.createObjectURL(file));
         } catch (error) {
-            console.error("❌ فشل رفع الصورة:", error.response?.data || error);
+            console.error(
+                texts[language].uploadFailed,
+                error.response?.data || error
+            );
         }
     };
 
@@ -71,7 +99,7 @@ export default function ImageUploader() {
             }, 2000); // إضافة تأخير بسيط لمحاكاة الفحص
         } catch (error) {
             console.error(
-                "❌ فشل تحليل الصورة:",
+                texts[language].analyzeFailed,
                 error.response?.data || error
             );
             setLoading(false);
@@ -105,10 +133,12 @@ export default function ImageUploader() {
                 >
                     <input {...getInputProps()} />
                     {isDragActive ? (
-                        <p className="text-gray-700">Drop photo here...</p>
+                        <p className="text-gray-700">
+                            {texts[language].dropPhoto}
+                        </p>
                     ) : (
                         <p className="text-gray-500">
-                            Drag & Drop your image here, or click to select
+                            {texts[language].dragDrop}
                         </p>
                     )}
                 </div>
@@ -151,11 +181,14 @@ export default function ImageUploader() {
                     {/* عرض نتيجة الفحص */}
                     {loading ? (
                         <div className="mt-1 text-blue-600 font-medium">
-                            scanning ...
+                            {texts[language].scanning}
                         </div>
                     ) : analysisResult ? (
                         <div className="mt-1 text-gray-700 text-sm text-center border border-green-600 px-2 py-0.5 rounded-lg">
-                            <p>Result: {analysisResult.result}</p>
+                            <p>
+                                {texts[language].result}:{" "}
+                                {analysisResult.result}
+                            </p>
                         </div>
                     ) : null}
 
@@ -165,7 +198,7 @@ export default function ImageUploader() {
                             onClick={removeImage}
                             className="bg-red-600 text-white font-bold p-1.5 rounded-md hover:bg-red-700 transition"
                         >
-                            cancel ❌
+                            {texts[language].cancel}
                         </button>
                         <button
                             onClick={analyzeImage}
@@ -176,7 +209,7 @@ export default function ImageUploader() {
                             }`}
                             disabled={loading}
                         >
-                            analyze 🔍
+                            {texts[language].analyze}
                         </button>
                     </div>
                 </motion.div>
