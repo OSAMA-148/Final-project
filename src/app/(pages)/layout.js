@@ -17,13 +17,13 @@ export default function HomeLayout({ children }) {
                 <IoIosArrowBack />
             </Link>
             {/* صورة المستخدم في كل الصفحات */}
-            <div className="absolute left-3.5 top-15 flex justify-center items-center">
+            <div className="absolute top-18 left-1.5 lg:left-3.5 lg:top-15 flex justify-center items-center">
                 <Image
                     width={50}
                     height={50}
                     src={profileImage || "/defult.png"}
                     alt="Profile"
-                    className="w-14 h-14 rounded-full border border-gray-300"
+                    className="lg:w-14 lg:h-14 w-10 h-10 rounded-full border border-gray-300"
                 />
                 <span className="block ml-2 font-bold text-2xl">
                     {fullName}

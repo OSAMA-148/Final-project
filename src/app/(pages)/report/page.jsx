@@ -60,8 +60,8 @@ const Report = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-4 w-full mb-[195px]">
-            <div className="w-[70%] flex flex-col items-center">
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 w-full lg:mb-[195px] mb-26">
+            <div className="w-full lg:w-[70%] flex flex-col items-center">
                 <textarea
                     placeholder={texts[language].placeholder}
                     className="w-full h-40 border border-gray-300 rounded-lg p-5 text-gray-700 text-xl focus:outline-none focus:ring-2 focus:ring-green-400 placeholder-gray-500 resize-none shadow-xl transition"

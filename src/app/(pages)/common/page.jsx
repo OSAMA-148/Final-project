@@ -136,7 +136,7 @@ export default function DiseasesPage() {
     const scrollNext = () => emblaApi && emblaApi.scrollNext();
 
     return (
-        <div className="min-h-screen flex flex-col items-center pt-[94px]">
+        <div className="min-h-screen flex flex-col items-center lg:pt-[94px] pt-42 px-2">
             <input
                 type="text"
                 placeholder={
@@ -146,7 +146,7 @@ export default function DiseasesPage() {
                 }
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
-                className="w-full max-w-md border border-gray-300 p-2 rounded-md mb-1 outline-none"
+                className="lg:w-full lg:max-w-md w-sm border border-gray-300 p-2 rounded-md mb-1 outline-none"
             />
 
             <div className="relative w-5xl">

@@ -53,9 +53,9 @@ const Usage = () => {
     const { language } = useLanguage(); // ← الحصول على اللغة الحالية
 
     return (
-        <div className="p-8 mx-auto w-6xl h-[65%]">
+        <div className="px-2 lg:p-8 mx-auto w-full lg:w-6xl lg:h-[65%] pb-12">
             <motion.h2
-                className="text-green-700 font-bold text-4xl flex items-center justify-center mb-10"
+                className="text-green-700 font-bold text-2xl lg:text-4xl flex items-center justify-center lg:mb-10 mb-2.5"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -64,11 +64,11 @@ const Usage = () => {
                     ? "🌱 Fertilizers Usage Tips"
                     : "🌱 نصائح استخدام الأسمدة"}
             </motion.h2>
-            <div className="mt-4 flex items-center justify-center space-x-2.5">
+            <div className="mt-2 lg:mt-4 lg:flex lg:items-center lg:justify-center space-x-2.5 grid grid-cols-2 gap-2">
                 {tips[language].map((tip, index) => (
                     <motion.div
                         key={tip.id}
-                        className="p-4 border rounded-lg shadow-md bg-transparent w-full"
+                        className="p-2 lg:p-4 border rounded-lg shadow-md bg-transparent w-full"
                         initial={{ opacity: 0, x: -50 }}
                         animate={{ opacity: 1, x: 0 }}
                         transition={{ duration: 0.5, delay: index * 0.2 }}
