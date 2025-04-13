@@ -48,7 +48,7 @@ const Register = () => {
     };
 
     return (
-        <div className="flex flex-col items-center px-4 py-28 lg:py-20 h-full lg:px-20 md:px-10">
+        <div className="flex flex-col items-center px-4 py-37 lg:py-20 h-full lg:px-20 md:px-10">
             {/* زر الرجوع */}
             <Link href="/login" className="absolute left-5 top-5 text-2xl">
                 <IoIosArrowBack className="text-gray-600" />

@@ -39,7 +39,7 @@ const Login = () => {
     return (
         <form
             onSubmit={handleSubmit}
-            className="flex justify-center items-center gap-2 flex-col h-full pb-44"
+            className="flex justify-center items-center gap-2 flex-col h-full pb-28"
         >
             <div className="relative mb-4">
                 <FaUser className="absolute left-3 top-3 text-gray-400 text-2xl" />
