@@ -60,9 +60,7 @@ const Register = () => {
                 onSubmit={handleSubmit}
             >
                 {/* صورة البروفايل */}
-                <div className="flex ">
-                    <UploadPhoto />
-                </div>
+                
 
                 {/* اسم المستخدم */}
                 <div className="relative">
