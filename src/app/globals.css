@@ -24,7 +24,7 @@
     text-decoration: none;
 }
 
-@media (max-width: 768px) {
+@media (max-width: 767px) {
     .background {
         background-image: url('/back.jpg');
         background-size: cover;

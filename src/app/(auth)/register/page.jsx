@@ -48,7 +48,7 @@ const Register = () => {
     };
 
     return (
-        <div className="flex flex-col items-center px-4 py-4 h-full lg:px-20 md:px-10">
+        <div className="flex flex-col items-center px-4 py-28 lg:py-1 h-full lg:px-20 md:px-10">
             {/* زر الرجوع */}
             <Link href="/login" className="absolute left-5 top-5 text-2xl">
                 <IoIosArrowBack className="text-gray-600" />
@@ -56,7 +56,7 @@ const Register = () => {
 
             {/* الفورم */}
             <form
-                className="w-full max-w-md lg:max-w-lg space-y-4 mt-5"
+                className="w-full max-w-md lg:max-w-lg space-y-2 lg:space-y-4 mt-5"
                 onSubmit={handleSubmit}
             >
                 {/* صورة البروفايل */}

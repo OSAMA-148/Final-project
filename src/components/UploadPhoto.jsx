@@ -26,8 +26,8 @@ const UploadPhoto = () => {
     };
 
     return (
-        <div className="flex items-center space-x-3 ">
-            <div className="w-14 h-14 rounded-full overflow-hidden border-2 border-dashed border-green-500 shadow-md">
+        <div className="flex items-center space-x-1 lg:space-x-3">
+            <div className="w-10 h-10 lg:w-14 lg:h-14 rounded-full overflow-hidden border-2 border-dashed border-green-500 shadow-md">
                 {image ? (
                     <img
                         src={image}
