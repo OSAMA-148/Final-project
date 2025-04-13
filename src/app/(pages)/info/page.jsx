@@ -31,9 +31,9 @@ export default function InfoPage() {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center mb-48 bg-ambe-200">
+        <div className="min-h-screen flex flex-col items-center justify-center mt-1.5 lg:mb-48 pb-15 lg:pb-0 px-1 lg:px-0">
             <motion.h1
-                className="text-3xl font-bold text-green-700 mb-2"
+                className="lg:text-3xl font-bold text-green-700 lg:mb-2"
                 initial={{ opacity: 0, y: -50 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -51,7 +51,7 @@ export default function InfoPage() {
             </motion.p>
 
             <motion.div
-                className="py-6 px-32 shadow-l rounded-lg"
+                className="lg:py-6 pb-16 lg:px-32 shadow-l rounded-lg"
                 initial={{ opacity: 0, scale: 0.8 }}
                 animate={{ opacity: 1, scale: 1 }}
                 transition={{ duration: 0.5, delay: 0.5 }}

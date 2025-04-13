@@ -70,8 +70,9 @@ export async function register(state, formData, router) {
 
         return { success: true };
     } catch (error) {
+        const errorMessage = error.message || "An unexpected error occurred.";
         return {
-            errors: { general: [error.message] },
+            errors: { email: [errorMessage] }, // ← تمرير الخطأ إلى email
         };
     }
 }

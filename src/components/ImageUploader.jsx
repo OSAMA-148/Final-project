@@ -125,11 +125,11 @@ export default function ImageUploader() {
     });
 
     return (
-        <div className="flex flex-col items-center font-bold text-xl">
+        <div className="flex flex-col items-center font-bold text-xl px-2 lg:px-0 pt-10 lg:pt-0">
             {!uploadedImage ? (
                 <div
                     {...getRootProps()}
-                    className="border-3 border-dashed border-green-700 w-3xl font-bold text-3xl h-51 flex justify-center items-center cursor-pointer bg-transparent hover:scale-105 transition"
+                    className="border-3 border-dashed border-green-700 p-2 text-center lg:w-3xl font-bold text-3xl lg:h-51 h-44 flex justify-center items-center cursor-pointer bg-transparent hover:scale-105 transition"
                 >
                     <input {...getInputProps()} />
                     {isDragActive ? (
