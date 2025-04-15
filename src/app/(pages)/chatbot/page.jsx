@@ -89,19 +89,19 @@ export default function Chat() {
     const handleNewChat = () => setMessages([]);
 
     return (
-        <div className="lg:w-[80%] w-full rounded-lg p-4 lg:mb-[238px] mb-33 bg-transparent">
+        <div className="lg:w-[80%] w-full rounded-lg p-4 lg:mb-[238px] mb-35 bg-transparent">
             <div className="flex justify-end items-center mb-1">
                 <motion.button
                     whileTap={{ scale: 0.9 }}
                     onClick={handleNewChat}
-                    className="bg-green-500 text-white p-2 rounded-full hover:bg-green-600 transition flex items-center justify-center gap-1"
+                    className="bg-green-500 text-white lg:p-2 p-1 rounded-full hover:bg-green-600 transition flex items-center justify-center gap-1"
                 >
                     <FaPlus />
                     <h1>{texts[language].newChat}</h1>
                 </motion.button>
             </div>
 
-            <div className="lg:h-[185px] h-[137px] overflow-y-auto p-4 rounded-lg flex flex-col border border-gray-400 shadow-lg">
+            <div className="lg:h-[185px] h-[147px] overflow-y-auto p-4 rounded-lg flex flex-col border border-gray-400 shadow-lg">
                 {messages.map((msg, index) => (
                     <motion.div
                         key={index}

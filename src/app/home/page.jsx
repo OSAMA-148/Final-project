@@ -81,7 +81,7 @@ const page = () => {
                             alt="Profile Picture"
                             width={55}
                             height={55}
-                            className="w-14 h-14 rounded-full border border-gray-300"
+                            className="lg:w-14 lg:h-14 w-15 h-15 rounded-full border border-gray-300"
                             onClick={toggleMenu}
                         />
                         {menuVisible && (
@@ -90,7 +90,7 @@ const page = () => {
                                 className="absolute top-16 left-0 bg-white border border-gray-300 rounded-xl shadow-xl w-40 p-2 justify-center items-center space-y-2"
                             >
                                 <li className="text-center font-bold hover:bg-gray-200 transition ease-in-out">
-                                    <span className="font-bold text-lg">
+                                    <span className="font-bold text-xl font-serif">
                                         {fullName ||
                                             (language === "en"
                                                 ? "User"
