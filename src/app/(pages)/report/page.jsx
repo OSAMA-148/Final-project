@@ -1,10 +1,12 @@
 "use client";
 
 import { useState } from "react";
+import Link from "next/link";
 import axios from "axios";
 import { toast } from "react-toastify";
 import Cookies from "js-cookie";
 import { useLanguage } from "@/context/LanguageContext"; // ← استيراد اللغة
+import { MdFeedback } from "react-icons/md";
 
 const API_BASE_URL2 = process.env.NEXT_PUBLIC_API_BASE_URL2;
 
@@ -20,6 +22,7 @@ const Report = () => {
             sending: "Sending...",
             success: "Report sent successfully!",
             error: "Failed to send the report. Please try again.",
+            viewProblems: "my problems",
         },
         ar: {
             placeholder: "صف مشكلتك",
@@ -27,6 +30,7 @@ const Report = () => {
             sending: "جارٍ الإرسال...",
             success: "تم إرسال التقرير بنجاح!",
             error: "فشل في إرسال التقرير. حاول مرة أخرى.",
+            viewProblems: "مشاكلي",
         },
     };
 
@@ -60,7 +64,8 @@ const Report = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-4 w-full lg:mb-[195px] mb-26">
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 w-full lg:mb-[195px] mb-26 relative">
+
             <div className="w-full lg:w-[70%] flex flex-col items-center">
                 <textarea
                     placeholder={texts[language].placeholder}
@@ -81,6 +86,16 @@ const Report = () => {
                     {loading ? texts[language].sending : texts[language].send}
                 </button>
             </div>
+            <Link href="/view-problem">
+                <button>
+                <div className="absolute left-0 bottom- flex items-center gap-1 text-gray-700 hover:text-blue-500 transition duration-300 ">
+                    <MdFeedback size={30} />
+                    <span className="text-lg font-semibold">
+                        {texts[language].viewProblems}
+                    </span>
+                </div>
+            </button>
+            </Link>
         </div>
     );
 };
