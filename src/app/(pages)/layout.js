@@ -13,11 +13,11 @@ export default function HomeLayout({ children }) {
     return (
         <>
             {/* أيقونة الرجوع */}
-            <Link href="/home" className="absolute left-5 top-5 text-2xl lg:hidden">
+            <Link href="/home" className="absolute left-5 top-5 text-2xl lg:hidden ">
                 <IoIosArrowBack />
             </Link>
             {/* صورة المستخدم في كل الصفحات */}
-            <div className="absolute top-15 left-1.5 lg:left-3.5 lg:top-12 flex justify-center items-center">
+            <div className="absolute top-15 left-1.5 lg:left-3.5 lg:top-8 flex justify-center items-center">
                 <Image
                     width={50}
                     height={50}
