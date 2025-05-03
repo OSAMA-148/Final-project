@@ -139,15 +139,4 @@ function isTokenValid(token) {
 
 
 
-// export const getUserNameFromToken = () => {
-//     const token = Cookies.get("token");
 
-//     if (!token) return null;
-
-//     try {
-//         const decoded = jwt.decode(token);
-//         return decoded?.name || null; // استخراج الاسم من التوكن
-//     } catch {
-//         return null;
-//     }
-// };

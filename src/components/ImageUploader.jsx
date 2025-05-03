@@ -7,7 +7,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { useLanguage } from "@/context/LanguageContext"; // ← استيراد اللغة
 
-const API_BASE_URL3 = process.env.NEXT_PUBLIC_API_BASE_URL3;
+const API_BASE_URL2 = process.env.NEXT_PUBLIC_API_BASE_URL2;
 
 export default function ImageUploader() {
     const { language } = useLanguage(); // ← الحصول على اللغة الحالية
@@ -50,7 +50,7 @@ export default function ImageUploader() {
 
         try {
             const response = await axios.post(
-                `${API_BASE_URL3}/upload`,
+                `${API_BASE_URL2}/PlantDiagnosis/upload`,
                 formData,
                 {
                     headers: {
@@ -83,7 +83,7 @@ export default function ImageUploader() {
 
         try {
             const response = await axios.post(
-                `${API_BASE_URL3}/diagnose`,
+                `${API_BASE_URL2}/PlantDiagnosis/diagnose`,
                 {},
                 {
                     headers: {
