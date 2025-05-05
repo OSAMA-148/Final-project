@@ -69,53 +69,11 @@ const Page = () => {
         fetchOrders();
     }, [language]);
 
-    const handleDelete = async (id) => {
-        try {
-            const token = Cookies.get("token");
-            await axios.delete(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL2}/ReportProblem/${id}`,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            setOrders(orders.filter((order) => order.id !== id));
-            toast.success(texts[language].deleteSuccess);
-        } catch (err) {
-            console.error(err.message);
-            toast.error(texts[language].deleteError);
-        }
-    };
 
-    const handleEdit = (order) => {
-        setEditingOrder(order);
-    };
 
-    const handleSave = async () => {
-        try {
-            const token = Cookies.get("token");
-            await axios.put(
-                `${process.env.NEXT_PUBLIC_API_BASE_URL2}/ReportProblem/${editingOrder.id}`,
-                editingOrder,
-                {
-                    headers: {
-                        Authorization: `Bearer ${token}`,
-                    },
-                }
-            );
-            setOrders(
-                orders.map((order) =>
-                    order.id === editingOrder.id ? editingOrder : order
-                )
-            );
-            setEditingOrder(null);
-            toast.success(texts[language].updateSuccess);
-        } catch (err) {
-            console.error(err.message);
-            toast.error(texts[language].updateError);
-        }
-    };
+
+
+
 
     const handleSearchChange = (e) => {
         const value = e.target.value;
@@ -127,18 +85,11 @@ const Page = () => {
         return <p className="text-white">{texts[language].fetching}</p>;
 
     return (
-        <div className="p-4 lg:mb-55 mb-30">
-            {/* Search Input */}
-            <input
-                type="text"
-                value={searchTerm}
-                onChange={handleSearchChange}
-                placeholder={texts[language].search}
-                className="mb-4 w-1/2 mx-auto block p-2 rounded-md border border-gray-600 bg-gray-800 text-white focus:outline-none focus:ring-2 focus:ring-blue-500"
-            />
+        <div className="p-4 lg:mb-52 mb-30">
+            
 
             {/* Cards Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 lg:h-[22vh] h-[23vh] overflow-y-scroll scroll-smooth">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 lg:h-[37vh] h-[23vh] overflow-y-scroll scroll-smooth">
                 {orders.map((order, index) => (
                     <div
                         key={order.id || index}
@@ -164,20 +115,7 @@ const Page = () => {
                             {order.description}
                         </p>
 
-                        <div className="flex gap-2 mt-auto">
-                            <button
-                                onClick={() => handleEdit(order)}
-                                className="bg-blue-500 text-white px-3 py-1 rounded text-sm"
-                            >
-                                {texts[language].edit}
-                            </button>
-                            <button
-                                onClick={() => handleDelete(order.id)}
-                                className="bg-red-500 text-white px-3 py-1 rounded text-sm"
-                            >
-                                {texts[language].delete}
-                            </button>
-                        </div>
+                        
                     </div>
                 ))}
             </div>
