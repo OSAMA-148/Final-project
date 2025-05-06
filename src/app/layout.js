@@ -11,7 +11,7 @@ export default function RootLayout({ children }) {
         <html lang="en">
             <body className="antialiased">
                 <div className="background bg-[url(https://i.imgur.com/TfuFSCF.jpeg)] bg-cover bg-center h-screen w-screen overflow-hidden bg-fixed">
-                    <ToastContainer position="top-center" autoClose={2000} />
+                    <ToastContainer position="top-center" autoClose={1000} />
                     <ContextProviders>{children}</ContextProviders>
                 </div>
             </body>

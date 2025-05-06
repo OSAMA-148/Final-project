@@ -86,16 +86,6 @@ const Report = () => {
                     {loading ? texts[language].sending : texts[language].send}
                 </button>
             </div>
-            <Link href="/view-problem">
-                <button>
-                <div className="absolute left-0 bottom- flex items-center gap-1 text-gray-700 hover:text-blue-500 transition duration-300 ">
-                    <MdFeedback size={30} />
-                    <span className="text-lg font-semibold">
-                        {texts[language].viewProblems}
-                    </span>
-                </div>
-            </button>
-            </Link>
         </div>
     );
 };

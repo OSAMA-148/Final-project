@@ -12,6 +12,7 @@ import { useProfileImage } from "@/context/ProfileImageContext";
 import { useUser } from "@/context/UserContext";
 import { useLanguage } from "@/context/LanguageContext";
 import Switch from "@/components/Switch";
+import { RiFeedbackLine } from "react-icons/ri";
 
 const page = () => {
     const { profileImage } = useProfileImage();
@@ -113,6 +114,19 @@ const page = () => {
                                         </span>
                                     </label>
                                 </li>
+                                <li>
+                                    <Link
+                                        href="/Feedback"
+                                        className="flex items-center justify-center hover:bg-gray-200 transition ease-in-out cursor-pointer"
+                                    >
+                                        <RiFeedbackLine size={35} />
+                                        <span className="ml-5 font-bold">
+                                            {language === "en"
+                                                ? "Feedback"
+                                                : "الآراء"}
+                                        </span>
+                                    </Link>
+                                </li>
                                 {/* Toggle Switch for Language */}
                                 <li>
                                     <Switch
@@ -129,7 +143,7 @@ const page = () => {
                                     onClick={handleLogout}
                                     className="flex justify-center items-center hover:bg-gray-200 transition ease-in-out cursor-pointer"
                                 >
-                                    <FiLogOut className="text-2xl" />
+                                    <FiLogOut size={35} />
                                     <span className="ml-4 font-bold">
                                         {language === "en"
                                             ? "Logout"

@@ -85,15 +85,15 @@ const Page = () => {
         return <p className="text-white">{texts[language].fetching}</p>;
 
     return (
-        <div className="p-4 lg:mb-52 mb-30">
+        <div className="p-4 lg:mb-52 mb-28">
             
 
             {/* Cards Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 lg:h-[37vh] h-[23vh] overflow-y-scroll scroll-smooth">
+            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 lg:h-[34vh] h-[34vh] overflow-y-scroll scroll-smooth">
                 {orders.map((order, index) => (
                     <div
                         key={order.id || index}
-                        className="bg-[#1e293b] text-white rounded-xl shadow-lg p-6 flex flex-col gap-1 transition hover:shadow-xl"
+                        className="bg-[#1e293b] text-white rounded-xl shadow-lg p-4 flex flex-col gap-3 transition hover:shadow-xl"
                     >
                         <div className="flex items-center gap-2">
                             <img
