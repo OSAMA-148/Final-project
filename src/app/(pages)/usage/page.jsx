@@ -55,7 +55,7 @@ const Usage = () => {
     return (
         <div className="px-2 lg:p-8 mx-auto w-full lg:w-6xl lg:h-[65%] pb-12">
             <motion.h2
-                className="text-green-700 font-bold text-2xl lg:text-4xl flex items-center justify-center lg:mb-10 mb-2.5"
+                className="text-green-700 font-bold text-2xl lg:text-4xl flex items-center justify-center lg:mb-10 mb-2 mt-3 lg:mt-0"
                 initial={{ opacity: 0, y: -20 }}
                 animate={{ opacity: 1, y: 0 }}
                 transition={{ duration: 0.5 }}
@@ -64,7 +64,7 @@ const Usage = () => {
                     ? "🌱 Fertilizers Usage Tips"
                     : "🌱 نصائح استخدام الأسمدة"}
             </motion.h2>
-            <div className="mt-2 lg:mt-4 lg:flex lg:items-center lg:justify-center space-x-2.5 grid grid-cols-2 gap-2">
+            <div className="mt-1 lg:mt-4 lg:flex lg:items-center lg:justify-center  grid grid-cols-2 lg:gap-2 gap-y-1 gap-x-9">
                 {tips[language].map((tip, index) => (
                     <motion.div
                         key={tip.id}

@@ -168,7 +168,7 @@ const page = () => {
 
             <main className="pt-48 lg:pt-42 h-screen">
                 {/* Buttons Section */}
-                <div className="lg:flex lg:flex-wrap lg:justify-center lg:gap-x-41 lg:gap-y-10 -mt-28 grid grid-cols-2 gap-x-2 gap-y-7 p-2">
+                <div className="lg:flex lg:flex-wrap lg:justify-center lg:gap-x-41 lg:gap-y-10 -mt-32 grid grid-cols-2 gap-3 p-4">
                     <Link
                         href="/upload"
                         className="bg-green-600 text-black px-2 py-3.5 lg:px-4 lg:py-7 rounded-lg flex flex-col items-center text-center justify-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"

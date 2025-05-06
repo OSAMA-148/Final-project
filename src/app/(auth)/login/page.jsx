@@ -90,7 +90,7 @@ const Login = () => {
                 <span className="font-serif font-bold">
                     Don't have an account?
                 </span>
-                <Link href="/register" className="text-blue-500 ml-1 underline">
+                <Link href="/register" className="text-blue-500 ml-1.5 hover:underline hover:text-blue-600 font-bold "> 
                     Register
                 </Link>
             </div>

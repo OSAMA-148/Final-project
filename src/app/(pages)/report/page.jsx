@@ -64,7 +64,7 @@ const Report = () => {
     };
 
     return (
-        <div className="min-h-screen flex flex-col items-center justify-center p-4 w-full lg:mb-[195px] mb-26 relative">
+        <div className="min-h-screen flex flex-col items-center justify-center p-4 w-full lg:mb-[195px] mb-27 relative">
 
             <div className="w-full lg:w-[70%] flex flex-col items-center">
                 <textarea
