@@ -13,6 +13,7 @@ import { useUser } from "@/context/UserContext";
 import { useLanguage } from "@/context/LanguageContext";
 import Switch from "@/components/Switch";
 import { RiFeedbackLine } from "react-icons/ri";
+import {motion} from "framer-motion";
 
 const page = () => {
     const { profileImage } = useProfileImage();
@@ -168,7 +169,12 @@ const page = () => {
 
             <main className="pt-48 lg:pt-42 h-screen">
                 {/* Buttons Section */}
-                <div className="lg:flex lg:flex-wrap lg:justify-center lg:gap-x-41 lg:gap-y-10 -mt-32 grid grid-cols-2 gap-3 p-4">
+                <motion.div
+                    initial={{ opacity: 0, y: 40 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6, ease: "easeOut" }}
+                    className="lg:flex lg:flex-wrap lg:justify-center lg:gap-x-41 lg:gap-y-10 -mt-32 grid grid-cols-2 gap-3 p-4"
+                >
                     <Link
                         href="/upload"
                         className="bg-green-600 text-black px-2 py-3.5 lg:px-4 lg:py-7 rounded-lg flex flex-col items-center text-center justify-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"
@@ -241,7 +247,7 @@ const page = () => {
                                 : "نصائح استخدام الأسمدة"}
                         </span>
                     </Link>
-                </div>
+                </motion.div>
             </main>
 
             {/* { Footer Image */}

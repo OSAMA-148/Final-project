@@ -5,6 +5,7 @@ import axios from "axios";
 import Cookies from "js-cookie";
 import { toast } from "react-toastify";
 import { useLanguage } from "@/context/LanguageContext";
+import { motion } from "framer-motion";
 
 const Page = () => {
     const [orders, setOrders] = useState([]);
@@ -47,20 +48,22 @@ const Page = () => {
         fetchOrders();
     }, [language]);
 
-
     if (fetching)
         return <p className="text-white">{texts[language].fetching}</p>;
 
     return (
         <div className="p-4 lg:mb-52 mb-27">
             {/* Cards Grid */}
-            <div className="grid grid-cols-2 sm:grid-cols-2 lg:grid-cols-4 gap-2 lg:h-[35vh] h-[35vh] overflow-y-scroll scroll-smooth overflow-x-hidden">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-2 lg:h-[35vh] h-[35vh] overflow-y-scroll scroll-smooth overflow-x-hidden">
                 {orders.map((order, index) => (
-                    <div
+                    <motion.div
                         key={order.id || index}
-                        className="bg-[#1e293b] text-white rounded-xl p-4 flex flex-col gap-3 transition duration-200 hover:scale-105 ease-in-out cursor-pointer"
+                        initial={{ opacity: 0, y: 20 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ duration: 0.4, delay: index * 0.1 }}
+                        className="bg-[#1e293b] text-white rounded-xl p-4 flex flex-col gap-3 transition duration-200  ease-in-out cursor-pointer"
                     >
-                        <div className="flex items-center gap-2">
+                        <div className="flex items-center gap-2 flex-wrap">
                             <img
                                 src="/defult.png"
                                 alt="User"
@@ -79,7 +82,7 @@ const Page = () => {
                         <p className="text-gray-300 font-bold">
                             {order.description}
                         </p>
-                    </div>
+                    </motion.div>
                 ))}
             </div>
         </div>
