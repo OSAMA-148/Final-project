@@ -13,6 +13,13 @@ import { useUser } from "@/context/UserContext";
 import { useLanguage } from "@/context/LanguageContext";
 import Switch from "@/components/Switch";
 import { RiFeedbackLine } from "react-icons/ri";
+import {
+    MdTravelExplore,
+    MdReportProblem,
+    MdOutlineTipsAndUpdates,
+} from "react-icons/md";
+import { FaCloudUploadAlt } from "react-icons/fa";
+
 import {motion} from "framer-motion";
 
 const page = () => {
@@ -173,19 +180,21 @@ const page = () => {
                     initial={{ opacity: 0, y: 40 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.6, ease: "easeOut" }}
-                    className="lg:flex lg:flex-wrap lg:justify-center lg:gap-x-41 lg:gap-y-10 -mt-32 grid grid-cols-2 gap-3 p-4"
+                    className="lg:flex lg:flex-wrap lg:justify-center lg:gap-x-41 lg:gap-y-8 -mt-32 grid grid-cols-2 gap-3 p-4"
                 >
                     <Link
                         href="/upload"
-                        className="bg-green-600 text-black px-2 py-3.5 lg:px-4 lg:py-7 rounded-lg flex flex-col items-center text-center justify-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"
+                        className="bg-green-600 text-white px-2 py-3.5 lg:px-4 lg:py-7 rounded-lg flex flex-col items-center text-center justify-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"
                     >
-                        <Image
+                        <FaCloudUploadAlt size={35}
+                        color="white"/>
+                        {/* <Image
                             src="/uploadimage.svg"
                             alt="Upload"
                             width={35}
                             height={35}
                             priority={true}
-                        />
+                        /> */}
                         <span className="mt-2 font-semibold font-serif">
                             {language === "en" ? "Upload Image" : " رفع صورة"}
                         </span>
@@ -193,16 +202,16 @@ const page = () => {
 
                     <Link
                         href="/common"
-                        className="bg-green-600 text-black p-1.5 lg:p-6 rounded-lg flex flex-col items-center text-center justify-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"
+                        className="bg-green-600 text-white p-1.5 lg:p-6 rounded-lg flex flex-col items-center text-center justify-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"
                     >
-                        <Image
+                        <MdTravelExplore size={35} color="white" />
+                        {/* <Image
                             src="/common.svg"
                             alt="Diseases"
                             width={30}
                             height={30}
-                            priority={true}
-                            layout="intrinsic"
-                        />
+                            color="white"
+                        /> */}
                         <span className="mt-2 font-semibold font-serif">
                             {language === "en"
                                 ? "Common Diseases"
@@ -212,16 +221,18 @@ const page = () => {
 
                     <Link
                         href="/report"
-                        className="bg-green-600 text-black p-1.5 lg:p-6 rounded-lg flex flex-col items-center text-center justify-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"
+                        className="bg-green-600 text-white p-1.5 lg:p-6 rounded-lg flex flex-col items-center text-center justify-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"
                     >
-                        <Image
+                        <MdReportProblem size={35} color="white" />
+                        {/* <Image
                             src="/report.svg"
                             alt="Report"
                             width={30}
                             height={30}
                             priority={true}
                             layout="intrinsic"
-                        />
+                            color="white"
+                        /> */}
                         <span className="mt-2 font-serif font-semibold">
                             {language === "en"
                                 ? "Report a Problem"
@@ -231,16 +242,17 @@ const page = () => {
 
                     <Link
                         href="/usage"
-                        className="bg-green-600 text-black p-1.5 lg:p-6 rounded-lg flex flex-col items-center justify-center text-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"
+                        className="bg-green-600 text-white p-1.5 lg:p-6 rounded-lg flex flex-col items-center justify-center text-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"
                     >
-                        <Image
+                        <MdOutlineTipsAndUpdates size={35} color="white" />
+                        {/* <Image
                             src="/tips.svg"
                             alt="Tips"
                             width={30}
                             height={30}
                             priority={true}
                             layout="intrinsic"
-                        />
+                        /> */}
                         <span className="mt-2 font-serif font-semibold">
                             {language === "en"
                                 ? "Fertilizers Usage Tips"
