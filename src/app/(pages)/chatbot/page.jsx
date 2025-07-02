@@ -89,7 +89,7 @@ export default function Chat() {
     const handleNewChat = () => setMessages([]);
 
     return (
-        <div className="lg:w-[80%] w-full rounded-lg p-4 lg:mb-[252px] mb-35 bg-transparent">
+        <div className="lg:w-[80%] w-full rounded-lg p-4  bg-transparent">
             <div className="flex justify-end items-center mb-1">
                 <motion.button
                     whileTap={{ scale: 0.9 }}
@@ -101,7 +101,7 @@ export default function Chat() {
                 </motion.button>
             </div>
 
-            <div className="lg:h-[195px] h-[147px] overflow-y-auto p-4 rounded-lg flex flex-col border border-gray-400 shadow-lg">
+            <div className="h-96 overflow-y-auto p-4 rounded-lg flex flex-col border border-gray-400 shadow-lg">
                 {messages.map((msg, index) => (
                     <motion.div
                         key={index}

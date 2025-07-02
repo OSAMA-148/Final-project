@@ -224,15 +224,6 @@ const page = () => {
                         className="bg-green-600 text-white p-1.5 lg:p-6 rounded-lg flex flex-col items-center text-center justify-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"
                     >
                         <MdReportProblem size={35} color="white" />
-                        {/* <Image
-                            src="/report.svg"
-                            alt="Report"
-                            width={30}
-                            height={30}
-                            priority={true}
-                            layout="intrinsic"
-                            color="white"
-                        /> */}
                         <span className="mt-2 font-serif font-semibold">
                             {language === "en"
                                 ? "Report a Problem"
@@ -245,14 +236,6 @@ const page = () => {
                         className="bg-green-600 text-white p-1.5 lg:p-6 rounded-lg flex flex-col items-center justify-center text-center lg:w-lg hover:bg-green-500 transition duration-300 ease-in-out"
                     >
                         <MdOutlineTipsAndUpdates size={35} color="white" />
-                        {/* <Image
-                            src="/tips.svg"
-                            alt="Tips"
-                            width={30}
-                            height={30}
-                            priority={true}
-                            layout="intrinsic"
-                        /> */}
                         <span className="mt-2 font-serif font-semibold">
                             {language === "en"
                                 ? "Fertilizers Usage Tips"
