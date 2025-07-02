@@ -90,11 +90,7 @@ const Register = () => {
     }, []);
 
     return (
-        <div className="flex flex-col items-center px-4 py-37 lg:py-20 h-full lg:px-20 md:px-10">
-            {/* زر الرجوع */}
-            <Link href="/login" className="absolute left-5 top-5 text-2xl">
-                <IoIosArrowBack className="text-gray-600" />
-            </Link>
+        <div className="flex flex-col items-center justify-center h-full">
 
             <form
                 className="w-full max-w-md lg:max-w-lg space-y-4 mt-5 relative"

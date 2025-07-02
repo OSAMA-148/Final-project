@@ -37,64 +37,77 @@ const Login = () => {
     };
 
     return (
-        <form
-            onSubmit={handleSubmit}
-            className="flex justify-center items-center gap-2 flex-col h-full pb-28 lg:pb-43"
-        >
-            <div className="relative mb-4">
-                <FaUser className="absolute left-3 top-3 text-gray-400 text-2xl" />
-                <input
-                    type="email"
-                    name="email"
-                    value={formData.email}
-                    onChange={handleChange}
-                    placeholder="Email"
-                    className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md"
-                />
-                {errors.general && (
-                    <p className="text-red-500 text-sm">{errors.general[0]}</p>
-                )}
-            </div>
+        <>
+            <form
+                onSubmit={handleSubmit}
+                className="flex justify-center items-center bg-white gap-2 flex-col h-full "
+            >
+                <div className="relative mb-4 ">
+                    <FaUser className="absolute left-3 top-3 text-gray-400 text-2xl" />
+                    <input
+                        type="email"
+                        name="email"
+                        value={formData.email}
+                        onChange={handleChange}
+                        placeholder="Email"
+                        className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md"
+                    />
+                    {errors.general && (
+                        <p className="text-red-500 text-sm">
+                            {errors.general[0]}
+                        </p>
+                    )}
+                </div>
 
-            <div className="relative mb-4">
-                <FaLock className="absolute left-3 top-3 text-gray-400 text-2xl" />
-                <input
-                    type={showPassword ? "text" : "password"}
-                    name="password"
-                    value={formData.password}
-                    onChange={handleChange}
-                    placeholder="Password"
-                    className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md"
-                />
+                <div className="relative mb-4">
+                    <FaLock className="absolute left-3 top-3 text-gray-400 text-2xl" />
+                    <input
+                        type={showPassword ? "text" : "password"}
+                        name="password"
+                        value={formData.password}
+                        onChange={handleChange}
+                        placeholder="Password"
+                        className="w-full pl-15 pr-15 py-3 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-green-500 shadow-md"
+                    />
+
+                    <button
+                        type="button"
+                        className="absolute right-3 top-3 text-gray-400 text-3xl"
+                        onClick={() => setShowPassword(!showPassword)}
+                    >
+                        {showPassword ? <VscEyeClosed /> : <VscEye />}
+                    </button>
+                    {errors.general && (
+                        <p className="text-red-500 text-sm">
+                            {errors.general[0]}
+                        </p>
+                    )}
+                </div>
 
                 <button
-                    type="button"
-                    className="absolute right-3 top-3 text-gray-400 text-3xl"
-                    onClick={() => setShowPassword(!showPassword)}
+                    type="submit"
+                    className="mx-auto py-2 bg-blue-500 text-white rounded-full text-center px-30 disabled:bg-gray-500 cursor-pointer hover:bg-blue-600 transition-all duration-200"
+                    disabled={loading}
                 >
-                    {showPassword ? <VscEyeClosed /> : <VscEye />}
+                    {loading ? (
+                        <ClipLoader color="#ffffff" size={30} />
+                    ) : (
+                        "Login"
+                    )}
                 </button>
-                {errors.general && (
-                    <p className="text-red-500 text-sm">{errors.general[0]}</p>
-                )}
-            </div>
-
-            <button
-                type="submit"
-                className="mx-auto py-2 bg-blue-500 text-white rounded-full text-center px-30 disabled:bg-gray-500 cursor-pointer hover:bg-blue-600 transition-all duration-200"
-                disabled={loading}
-            >
-                {loading ? <ClipLoader color="#ffffff" size={30} /> : "Login"}
-            </button>
-            <div className="flex justify-center">
-                <span className="font-serif font-bold">
-                    Don't have an account?
-                </span>
-                <Link href="/register" className="text-blue-500 ml-1.5 hover:underline hover:text-blue-600 font-bold "> 
-                    Register
-                </Link>
-            </div>
-        </form>
+                <div className="flex justify-center">
+                    <span className="font-serif font-bold">
+                        Don't have an account?
+                    </span>
+                    <Link
+                        href="/register"
+                        className="text-blue-500 ml-1.5 hover:underline hover:text-blue-600 font-bold "
+                    >
+                        Register
+                    </Link>
+                </div>
+            </form>
+        </>
     );
 };
 
